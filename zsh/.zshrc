@@ -1,4 +1,5 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of
+# ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -78,7 +79,7 @@ ZSH_THEME="spaceship"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-vi-mode z)
+plugins=(git zsh-autosuggestions zsh-vi-mode zsh-z)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 
@@ -105,19 +106,34 @@ fi
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
+
+alias cat="batcat"
+alias wta="~/.dotfiles/gwta.sh"
+
+alias pbcopy="xclip -sel clip"
+alias pbpaste="xclip -sel clip -o"
 alias zshconfig="v ~/.zshrc"
 alias tmuxconfig="v ~/.tmux.conf"
 alias vimconfig="v ~/.config/nvim/init.vim"
 alias ^L=clear
+
+alias c="code"
+alias cr="code -r"
+alias cr.="code -r ."
+alias tdi="td --interactive"
 
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
 alias oldvim="vim"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias snuber="~/.tmux/snuber.sh"
+alias enirovpn="sudo openvpn --config ~/.eniroconfig/enirovpn2.vpn"
+alias gwtab="git checkout wo"
 
+alias l='exa --color=always --group-directories-first'      # some files and dirs
+alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -1 --color=always --group-directories-first'  # long format
+alias ls='exa -a1 --color=always --group-directories-first' # my preferred listing
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
@@ -128,9 +144,9 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 alias confi='/usr/bin/it --it-dir=/home/viktor/.cf/ --work-tree=/home/viktor'
+
 export TERM=xterm-256color
 fpath=($fpath "/home/viktor/.zfunctions")
 
