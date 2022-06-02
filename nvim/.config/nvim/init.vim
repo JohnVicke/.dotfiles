@@ -1,5 +1,5 @@
 set encoding=UTF-8
-" Specify a directory for plugins
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -8,34 +8,36 @@ Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'APZelos/blamer.nvim'
-
+Plug 'kdheepak/lazygit.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'github/copilot.vim'
+Plug 'ptzz/lf.vim'
+Plug 'voldikss/vim-floaterm'
 Plug 'christoomey/vim-tmux-navigator'
-
 Plug 'morhetz/gruvbox'
-
-Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'HerringtonDarkholme/yats.vim' 
 Plug 'ryanoasis/vim-devicons'
 Plug 'machakann/vim-highlightedyank'
 
-" Initialize plugin system
 call plug#end()
 
 " Enable git blame
 let g:blamer_enabled = 1
 
-let mapleader=","
+let mapleader = "\<Space>" 
+let NERDTreeShowHidden=1
 
 inoremap jj <ESC>
 nmap <C-b> :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
-" open NERDTree automatically
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * NERDTree
 
 let g:NERDTreeGitStatusWithFlags = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -63,10 +65,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 let g:prettier#autoformat = 0
 autocmd BufWritePre .js,.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
-
-" ctrlp
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
 " j/k will move virtual lines (lines that wrap)
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
@@ -85,7 +83,6 @@ let g:gruvbox_material_background='soft'
 let g:airline_theme = 'gruvbox_material'
 
 " sync open file with NERDTree
-" " Check if NERDTree is open or active
 function! IsNERDTreeOpen()        
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
@@ -100,7 +97,7 @@ function! SyncTree()
 endfunction
 
 " Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
+autocmd BufRead * call SyncTree()
 
 " coc config
 let g:coc_global_extensions = [
@@ -157,6 +154,8 @@ nmap <silent> gr <Plug>(coc-references)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
+nnoremap <silent> <leader>gg :LazyGit<CR>
+
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -167,7 +166,6 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
 
@@ -213,32 +211,19 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add status line support, for integration with other plugin, checkout :h coc-status
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 
 nnoremap <leader>s :split<CR>
 nnoremap <leader>v :vsplit<CR>
-nnoremap <leader>w :update<cr>
-inoremap <leader>w <Esc>:update<cr>gi
+nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
+
+nnoremap <C-p> <cmd>Telescope find_files hidden=true<CR>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Transparency
 hi Normal guibg=NONE ctermbg=NONE
