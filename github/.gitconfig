@@ -1,9 +1,19 @@
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
-[user]
-	email = viktor.malmedal@eniro.com
-	name = Viktor Malmedal
+
+[includeIf "gitdir:~/dev/personal/**"]
+  path = ~/.config/git/personal
+
+[includeIf "gitdir:~/dev/work/eniro/**"]
+  path = ~/.config/git/eniro
+
+[includeIf "gitdir:~/dev/work/cygni/**"]
+  path = ~/.config/git/cygni
+
+[includeIf "gitdir:~/.dotfiles/**"]
+  path = ~/.config/git/personal
+
 [color]
   ui = auto
 [alias]
@@ -14,18 +24,15 @@
   reword = commit --amend
 
 [core]
-	editor = code --wait
+	editor = nvim --wait
   pager = cat
 
 [diff]
-    tool = vscode
+  tool = nvim
 
 [difftool "vscode"]
-  cmd = code --wait --dif $LOCAL $REMOTE
+  cmd = nvim --wait --dif $LOCAL $REMOTE
 
 [merge]
-    tool = vscode
-[mergetool "vscode"]
-  cmd = code --wait $MERGED
+  tool = nvim
 
-  

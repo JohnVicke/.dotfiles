@@ -1,10 +1,12 @@
 local Remap = require("johnvicke.keymap")
 local luasnip = require("luasnip")
+local saga = require("lspsaga")
 local nnoremap = Remap.nnoremap
 local inoremap = Remap.inoremap
 
 local cmp = require("cmp")
 local lspkind = require("lspkind")
+saga.init_lsp_saga()
 
 cmp.setup({
 	snippet = {
@@ -14,7 +16,7 @@ cmp.setup({
 	},
 
 	mapping = cmp.mapping.preset.insert({
-    ['<CR>']     = cmp.mapping.confirm({ select = true }),
+    ['<CR>']      = cmp.mapping.confirm({ select = true }),
 		["<C-u>"]     = cmp.mapping.scroll_docs(-4),
 		["<C-d>"]     = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
@@ -29,15 +31,15 @@ cmp.setup({
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function()
 			nnoremap("gd", function() vim.lsp.buf.definition() end)
-			nnoremap("K", function() vim.lsp.buf.hover() end)
+			nnoremap("K", "<cmd>Lspsaga hover_doc<CR>")
 			nnoremap("<leader>vws", function() vim.lsp.buf.workspace_symbol() end)
 			nnoremap("<leader>vd", function() vim.diagnostic.open_float() end)
-			nnoremap("[g", function() vim.diagnostic.goto_next() end)
-		  nnoremap("]g", function() vim.diagnostic.goto_prev() end)
-			nnoremap("<leader>ca", function() vim.lsp.buf.code_action() end)
+			nnoremap("[g", function() vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR}) end)
+		  nnoremap("]g", function() vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR}) end)
+			nnoremap("<leader>ca", "<cmd>Lspsaga code_action<CR>")
 			nnoremap("<leader>co", function() vim.lsp.buf.code_action({
                 filter = function(code_action)
                     if not code_action or not code_action.data then
@@ -50,25 +52,23 @@ local function config(_config)
                 apply = true
             }) end)
 			nnoremap("<leader>rr", function() vim.lsp.buf.references() end)
-			nnoremap("<leader>rn", function() vim.lsp.buf.rename() end)
+			nnoremap("<leader>rn",  "<cmd>Lspsaga rename<CR>")
 			inoremap("<C-h>", function() vim.lsp.buf.signature_help() end)
+      nnoremap("<leader>gh", "<cmd>Lspsaga lsp_finder<CR>")
+
 		end,
 	}, _config or {})
 end
 
 require("lspconfig").zls.setup(config())
-
-require("lspconfig").tsserver.setup(config())
-
+require("lspconfig").tsserver.setup(config(), {filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact", "javascript.jsx" }})
 require("lspconfig").ccls.setup(config())
-
 require("lspconfig").jedi_language_server.setup(config())
-
 require("lspconfig").svelte.setup(config())
-
 require("lspconfig").solang.setup(config())
-
 require("lspconfig").cssls.setup(config())
+require("lspconfig").tailwindcss.setup(config())
+require("lspconfig").prismals.setup(config())
 
 require("lspconfig").gopls.setup(config({
 	cmd = { "gopls", "serve" },
@@ -112,8 +112,4 @@ luasnip.filetype_extend("javascript", {"html"})
 luasnip.filetype_extend("javascriptreact", {"html"})
 luasnip.filetype_extend("typescriptreact", {"html"})
 
-require("luasnip.loaders.from_vscode").lazy_load({
-	paths = snippets_paths(),
-	include = nil, -- Load all languages
-	exclude = {},
-})
+

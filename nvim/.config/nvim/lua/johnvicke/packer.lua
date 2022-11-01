@@ -10,14 +10,14 @@ return require("packer").startup(function()
 
   use("romgrk/nvim-treesitter-context")
 
-  use('kyazdani42/nvim-web-devicons')
+  use("kyazdani42/nvim-web-devicons")
 
 
   use({"nvim-lualine/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons", opt = true }
     })
   
-  use ('olivercederborg/poimandres.nvim')
+  use ("olivercederborg/poimandres.nvim")
 
   use("gruvbox-community/gruvbox")
   use("folke/tokyonight.nvim")
@@ -29,9 +29,9 @@ return require("packer").startup(function()
   -- Telescope
   use "nvim-lua/plenary.nvim"
   use "nvim-telescope/telescope.nvim"
+  use { "nvim-telescope/telescope-file-browser.nvim" }
 
-  use{"kyazdani42/nvim-tree.lua", requires="kyazdani42/nvim-web-devicons"}
-  use ('ThePrimeagen/harpoon')
+  use ("ThePrimeagen/harpoon")
 
   use {
     "ThePrimeagen/refactoring.nvim",
@@ -48,7 +48,7 @@ return require("packer").startup(function()
   use("hrsh7th/cmp-buffer")
   use("hrsh7th/nvim-cmp")
   use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
-  use('saadparwaiz1/cmp_luasnip')
+  use("saadparwaiz1/cmp_luasnip")
   use("onsails/lspkind-nvim")
   use("nvim-lua/lsp_extensions.nvim")
   use("glepnir/lspsaga.nvim")
@@ -56,7 +56,7 @@ return require("packer").startup(function()
 
   use("jose-elias-alvarez/null-ls.nvim")
 
-  use 'github/copilot.vim'
+  use("sotte/presenting.vim")
 
 end)
 

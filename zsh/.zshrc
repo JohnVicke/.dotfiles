@@ -122,4 +122,6 @@ fi
 # pnpm
 export PNPM_HOME="/home/viktor/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
 # pnpm end
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
