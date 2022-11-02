@@ -144,6 +144,11 @@ _G.packer_plugins = {
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
   ["null-ls.nvim"] = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
@@ -189,11 +194,6 @@ _G.packer_plugins = {
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/poimandres.nvim",
     url = "https://github.com/olivercederborg/poimandres.nvim"
   },
-  ["presenting.vim"] = {
-    loaded = true,
-    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/presenting.vim",
-    url = "https://github.com/sotte/presenting.vim"
-  },
   ["refactoring.nvim"] = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
@@ -218,6 +218,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
+  },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
   }
 }
 

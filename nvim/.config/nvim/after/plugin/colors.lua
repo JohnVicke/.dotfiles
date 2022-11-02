@@ -56,7 +56,7 @@ vim.cmd("colorscheme " .. vim.g.johnvicke_colorscheme)
 
 GruvBoxSetup()
 
-if colorScheme == "poimandres" then
+if color_scheme == "poimandres" then
     PoimandresSetup()
 end
 
