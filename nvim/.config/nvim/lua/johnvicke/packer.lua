@@ -1,64 +1,117 @@
 return require("packer").startup(function()
-  use "wbthomason/packer.nvim"
+	use("wbthomason/packer.nvim")
 
-  use "kdheepak/lazygit.nvim" 
+	use("kdheepak/lazygit.nvim")
 
-  use("nvim-treesitter/nvim-treesitter", {
-        run = ":TSUpdate"
-    })
+	use("nvim-treesitter/nvim-treesitter", {
+		run = ":TSUpdate",
+	})
 
-  use "romgrk/nvim-treesitter-context" 
+	use("romgrk/nvim-treesitter-context")
 
-  use "kyazdani42/nvim-web-devicons" 
+	use("kyazdani42/nvim-web-devicons")
 
-  use({"nvim-lualine/lualine.nvim",
-        requires = { "kyazdani42/nvim-web-devicons", opt = true }
-    })
-  
-  use  "olivercederborg/poimandres.nvim" 
+	use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
 
-  use "gruvbox-community/gruvbox" 
-  use "folke/tokyonight.nvim" 
-  use{ "catppuccin/nvim", as = "catppuccin"}
+	use("olivercederborg/poimandres.nvim")
+	use("f-person/git-blame.nvim")
 
-  use "lewis6991/gitsigns.nvim" 
-  use "dinhhuy258/git.nvim" 
+	use("gruvbox-community/gruvbox")
+	use("folke/tokyonight.nvim")
+	use({ "catppuccin/nvim", as = "catppuccin" })
 
-  -- Telescope
-  use "nvim-lua/plenary.nvim"
-  use "nvim-telescope/telescope.nvim"
-  use "nvim-telescope/telescope-file-browser.nvim"
+	use("lewis6991/gitsigns.nvim")
+	use("dinhhuy258/git.nvim")
 
-  use "ThePrimeagen/harpoon"
+	-- Telescope
+	use("nvim-lua/plenary.nvim")
+	use("nvim-telescope/telescope.nvim")
+	use("nvim-telescope/telescope-file-browser.nvim")
 
-  use {
-    "ThePrimeagen/refactoring.nvim",
-    requires = {
-        {"nvim-lua/plenary.nvim"},
-        {"nvim-treesitter/nvim-treesitter"}
-    }
-  }
+	use("ThePrimeagen/harpoon")
 
-  use "neovim/nvim-lspconfig"
+	use({
+		"ThePrimeagen/refactoring.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+	})
 
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-buffer"
-  use "hrsh7th/nvim-cmp"
-  use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
-  use "saadparwaiz1/cmp_luasnip" 
-  use "onsails/lspkind-nvim" 
-  use "nvim-lua/lsp_extensions.nvim" 
-  use "glepnir/lspsaga.nvim" 
-  use "simrat39/symbols-outline.nvim" 
+	use("neovim/nvim-lspconfig")
 
-  use "jose-elias-alvarez/null-ls.nvim" 
-  -- Lua
-  use {
-    "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
-  }
+	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/nvim-cmp")
+	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
+	use("saadparwaiz1/cmp_luasnip")
+	use("onsails/lspkind-nvim")
+	use("nvim-lua/lsp_extensions.nvim")
+	use("glepnir/lspsaga.nvim")
+	use("simrat39/symbols-outline.nvim")
 
-  use { "williamboman/mason.nvim" }
+	use({ "hrsh7th/cmp-cmdline" })
+	use({ "hrsh7th/cmp-path" })
+	use({ "hrsh7th/cmp-buffer" })
+	use({ "hrsh7th/cmp-nvim-lsp" })
+	use({ "onsails/lspkind-nvim" })
+	use({ "hrsh7th/cmp-vsnip" })
+	use({ "hrsh7th/vim-vsnip" })
+	use({ "rafamadriz/friendly-snippets" })
 
+	use({
+		"hrsh7th/nvim-cmp",
+		requires = {
+			-- Cmdline completions
+			"hrsh7th/cmp-cmdline",
+			-- Path completions
+			"hrsh7th/cmp-path",
+			-- Buffer completions
+			"hrsh7th/cmp-buffer",
+			-- LSP completions
+			"hrsh7th/cmp-nvim-lsp",
+			"onsails/lspkind-nvim",
+			-- vnsip completions
+			"hrsh7th/cmp-vsnip",
+			"hrsh7th/vim-vsnip",
+			"rafamadriz/friendly-snippets",
+		},
+	})
+
+	use("princejoogie/tailwind-highlight.nvim")
+
+	use({
+		"creativenull/diagnosticls-configs-nvim",
+	})
+
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
+
+	use({
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+	})
+
+	use({ "williamboman/mason.nvim" })
+	use({ "williamboman/mason-lspconfig.nvim" })
+	use({ "WhoIsSethDaniel/mason-tool-installer.nvim" })
+
+	use({
+		"startup-nvim/startup.nvim",
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	})
+	use({
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+		},
+	})
+	use({ "jiangmiao/auto-pairs" })
+	use({ "tpope/vim-surround" })
+	use({ "simrat39/rust-tools.nvim" })
 end)
-

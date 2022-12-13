@@ -3,7 +3,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export ZSH="/home/viktor/.oh-my-zsh"
+
 ZSH_THEME="spaceship"
+
 SPACESHIP_PROMPT_ORDER=(
   time          # Time stamps section
   user          # Username section
@@ -74,12 +76,20 @@ alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
 alias oldvim="vim"
+alias nvimdiff="nvim -d"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias enirovpn="sudo openvpn --config ~/.eniroconfig/enirovpn2.vpn"
 alias gwtab="git checkout wo"
 
+alias ..='cd ../'                      # Go back 1 directory level
+alias ...='cd ../../'                  # Go back 2 directory levels
+alias .3='cd ../../../'                # Go back 3 directory levels
+alias .4='cd ../../../../'             # Go back 4 directory levels
+alias .5='cd ../../../../../'          # Go back 5 directory levels
+alias .6='cd ../../../../../../'       # Go back 6 directory levels
+
 alias l='exa --color=always --group-directories-first'      # some files and dirs
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias la='exa --header --long'  
 alias ll='exa -1 --color=always --group-directories-first'  # long format
 alias ls='exa -a1 --color=always --group-directories-first' # my preferred listing
 export ANDROID_HOME=$HOME/Android/Sdk
@@ -123,5 +133,15 @@ fi
 export PNPM_HOME="/home/viktor/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
+export DENO_INSTALL="/home/viktor/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # pnpm end
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# bun completions
+[ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

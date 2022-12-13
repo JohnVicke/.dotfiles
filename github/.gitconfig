@@ -16,23 +16,23 @@
 
 [color]
   ui = auto
+
 [alias]
-  lg = log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'
+  lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   oops = commit --amend --no-edit
   review-local="!git lg @{push}.."
   uncommit = reset --soft HEAD~1
   reword = commit --amend
+  lease = push --force-with-lease
 
 [core]
-	editor = nvim --wait
-  pager = cat
+	editor = nvim 
+
+[difftool]
+    prompt = true
 
 [diff]
-  tool = nvim
+    tool = vimdiff
 
-[difftool "vscode"]
-  cmd = nvim --wait --dif $LOCAL $REMOTE
-
-[merge]
-  tool = nvim
-
+[difftool "vimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""

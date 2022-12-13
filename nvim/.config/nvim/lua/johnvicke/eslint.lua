@@ -1,17 +1,17 @@
 local M = {}
 
 function fix_current_file()
-  return function()
-    local filetype = vim.bo.filetype
+	return function()
+		local filetype = vim.bo.filetype
 
-    vim.cmd("silent! %!eslint_d --fix %")
-  end
+		vim.cmd("silent! %!eslint_d --fix %")
+	end
 end
 
 function fix_all()
-  return function()
-    vim.cmd("silent! %!eslint_d --fix .")
-  end
+	return function()
+		vim.cmd("silent! %!eslint_d --fix .")
+	end
 end
 
 M.fix_current_file = fix_current_file()

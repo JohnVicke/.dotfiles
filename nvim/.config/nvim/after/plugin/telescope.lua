@@ -4,63 +4,65 @@ local actions = require("telescope.actions")
 local nnoremap = require("johnvicke.keymap").nnoremap
 
 function telescope_buffer_dir()
-  return vim.fn.expand('%:p:h')
+	return vim.fn.expand("%:p:h")
 end
 
-require("telescope").load_extension "file_browser"
+require("telescope").load_extension("file_browser")
 require("telescope").setup({
-  defaults = {
-    prompt_prefix = " >",
+	defaults = {
+		prompt_prefix = " >",
 		color_devicons = true,
-    file_sorter = require("telescope.sorters").get_fzy_sorter,
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+		file_sorter = require("telescope.sorters").get_fzy_sorter,
+		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
 		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-    mappings = {
-      n = {
-        ["q"] = actions.close,
-        ["<S-Enter>"] = actions.select_tab
-      },
-    },
-  },
-  extensions = {
-    file_browser = {
-      theme = "ivy",
-      hijack_netrw = true,
-      mappings = {
-        ["i"] = {
-          -- your custom insert mode mappings
-        },
-        ["n"] = {
-          -- your custom normal mode mappings
-        },
-      },
-    },
-  },
+		mappings = {
+			n = {
+				["q"] = actions.close,
+				["<S-Enter>"] = actions.select_tab,
+			},
+		},
+	},
+	extensions = {
+		file_browser = {
+			hijack_netrw = true,
+			mappings = {
+				["i"] = {
+					-- your custom insert mode mappings
+				},
+				["n"] = {
+					-- your custom normal mode mappings
+				},
+			},
+		},
+	},
 })
 
 nnoremap("<leader>fr", function()
-  require("telescope").extensions.file_browser.file_browser({
-    respect_gitignore = false,
-    hidden = true,
-    grouped = true,
-    initial_mode = "normal",
-    layout_config = { height = 40 },
-  })
+	require("telescope").extensions.file_browser.file_browser({
+		respect_gitignore = false,
+		hidden = true,
+		grouped = true,
+		initial_mode = "normal",
+		layout_config = { height = 40 },
+	})
 end)
 
 nnoremap("<leader>fe", function()
-  require("telescope").extensions.file_browser.file_browser({
-    path = "%:p:h",
-    cwd = telescope_buffer_dir(),
-    respect_gitignore = true,
-    hidden = true,
-    grouped = true,
-    initial_mode = "normal",
-    layout_config = { height = 40 },
-  })
+	require("telescope").extensions.file_browser.file_browser({
+		path = "%:p:h",
+		cwd = telescope_buffer_dir(),
+		respect_gitignore = true,
+		hidden = true,
+		grouped = true,
+		initial_mode = "normal",
+		layout_config = { height = 40 },
+	})
 end)
 
-nnoremap("<leader>ff",  function() builtin.find_files() end) 
-nnoremap("<leader>fg",  function() builtin.live_grep() end)
-
+nnoremap("<leader>ff", function()
+	builtin.find_files()
+end)
+nnoremap("<leader>fg", function()
+	builtin.live_grep()
+end)
