@@ -29,10 +29,12 @@
 	editor = nvim 
 
 [difftool]
-    prompt = true
+  prompt = true
 
 [diff]
-    tool = vimdiff
+  tool = vimdiff
 
 [difftool "vimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+  cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[push]
+	default = simple
