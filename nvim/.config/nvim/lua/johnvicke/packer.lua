@@ -13,11 +13,9 @@ return require("packer").startup(function()
 
 	use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
 
-	use("olivercederborg/poimandres.nvim")
 	use("f-person/git-blame.nvim")
 
 	use("gruvbox-community/gruvbox")
-	use("folke/tokyonight.nvim")
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	use("lewis6991/gitsigns.nvim")
@@ -37,6 +35,8 @@ return require("packer").startup(function()
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 	})
+
+	use("github/copilot.vim")
 
 	use("neovim/nvim-lspconfig")
 
@@ -114,4 +114,5 @@ return require("packer").startup(function()
 	use({ "jiangmiao/auto-pairs" })
 	use({ "tpope/vim-surround" })
 	use({ "simrat39/rust-tools.nvim" })
+	use({ "folke/which-key.nvim" })
 end)

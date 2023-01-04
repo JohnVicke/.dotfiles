@@ -121,6 +121,7 @@ lspconfig.html.setup(default_config)
 lspconfig.jsonls.setup(default_config)
 lspconfig.yamlls.setup(default_config)
 lspconfig.gopls.setup(default_config)
+lspconfig.prismals.setup(default_config)
 
 -- Tailwind CSS
 local tw_highlight = require("tailwind-highlight")

@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/auto-pairs",
     url = "https://github.com/jiangmiao/auto-pairs"
   },
+  ["bufferline.nvim"] = {
+    loaded = true,
+    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
+    url = "https://github.com/akinsho/bufferline.nvim"
+  },
   catppuccin = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/catppuccin",
@@ -118,6 +123,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
+  ["copilot.vim"] = {
+    loaded = true,
+    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/copilot.vim",
+    url = "https://github.com/github/copilot.vim"
   },
   ["diagnosticls-configs-nvim"] = {
     loaded = true,
@@ -239,11 +249,6 @@ _G.packer_plugins = {
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["poimandres.nvim"] = {
-    loaded = true,
-    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/poimandres.nvim",
-    url = "https://github.com/olivercederborg/poimandres.nvim"
-  },
   ["refactoring.nvim"] = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
@@ -284,11 +289,6 @@ _G.packer_plugins = {
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/todo-comments.nvim",
     url = "https://github.com/folke/todo-comments.nvim"
   },
-  ["tokyonight.nvim"] = {
-    loaded = true,
-    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
-    url = "https://github.com/folke/tokyonight.nvim"
-  },
   ["trouble.nvim"] = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/trouble.nvim",
@@ -303,6 +303,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/vim-vsnip",
     url = "https://github.com/hrsh7th/vim-vsnip"
+  },
+  ["which-key.nvim"] = {
+    loaded = true,
+    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 

@@ -92,6 +92,10 @@ alias l='exa --color=always --group-directories-first'      # some files and dir
 alias la='exa --header --long'  
 alias ll='exa -1 --color=always --group-directories-first'  # long format
 alias ls='exa -a1 --color=always --group-directories-first' # my preferred listing
+alias bat="batcat"
+
+alias kubectl="minikube kubectl --"
+
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
