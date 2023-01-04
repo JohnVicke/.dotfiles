@@ -1,15 +1,15 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 font:
   normal:
-    family: FiraCode Nerd Font
+    family: Fira Code
     style: Regular
 
   bold:
-    family: FiraCode Nerd Font
+    family: Fira Code
     style: Bold
 
   italic:
-    family: FiraCode Nerd Font
+    family: Fira Code
     style: Italic
 
   size: 12.0
@@ -21,8 +21,6 @@ font:
   glyph_offset:
     x: 0
     y: 0
-  normal:
-    familly: "FiraCode NF"
 
 
   # Selection colors
