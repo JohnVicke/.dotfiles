@@ -40,5 +40,9 @@ vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.relativenumber = true
 
+-- Add asterisks in block comments
+vim.opt.formatoptions:append({ "r" })
+
+vim.cmd("let g:copilot_assume_mapped = v:true")
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true })

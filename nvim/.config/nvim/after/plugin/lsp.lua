@@ -1,12 +1,11 @@
 local Remap = require("johnvicke.keymap")
-local saga = require("lspsaga")
 local nnoremap = Remap.nnoremap
 local diagnosticls = require("diagnosticls-configs")
 local lspconfig = require("lspconfig")
 local format_group = vim.api.nvim_create_augroup("LspFormatGroup", {})
 local format_opts = { async = false, timeout_ms = 2500 }
 
-saga.init_lsp_saga({ border_style = "rounded" })
+require("lspsaga").setup({ ui = { border = "rounded", theme = "round" } })
 
 local function register_fmt_keymap(name, bufnr)
 	nnoremap("<leader>p", function()

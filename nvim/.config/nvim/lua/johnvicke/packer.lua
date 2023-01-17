@@ -47,7 +47,12 @@ return require("packer").startup(function()
 	use("saadparwaiz1/cmp_luasnip")
 	use("onsails/lspkind-nvim")
 	use("nvim-lua/lsp_extensions.nvim")
-	use("glepnir/lspsaga.nvim")
+	use({
+		"glepnir/lspsaga.nvim",
+		config = function()
+			require("lspsaga").setup({})
+		end,
+	})
 	use("simrat39/symbols-outline.nvim")
 
 	use({ "hrsh7th/cmp-cmdline" })
@@ -111,7 +116,6 @@ return require("packer").startup(function()
 			"MunifTanjim/nui.nvim",
 		},
 	})
-	use({ "jiangmiao/auto-pairs" })
 	use({ "tpope/vim-surround" })
 	use({ "simrat39/rust-tools.nvim" })
 	use({ "folke/which-key.nvim" })
