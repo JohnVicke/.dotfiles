@@ -24,7 +24,6 @@ return require("packer").startup(function()
 	-- Telescope
 	use("nvim-lua/plenary.nvim")
 	use("nvim-telescope/telescope.nvim")
-	use("nvim-telescope/telescope-file-browser.nvim")
 
 	use("ThePrimeagen/harpoon")
 
@@ -36,7 +35,7 @@ return require("packer").startup(function()
 		},
 	})
 
-	use("github/copilot.vim")
+	use({ "zbirenbaum/copilot.lua" })
 
 	use("neovim/nvim-lspconfig")
 

@@ -14,8 +14,6 @@ SPACESHIP_PROMPT_ORDER=(
   git           # Git section (git_branch + git_status)
   hg            # Mercurial section (hg_branch  + hg_status)
   package       # Package version
-  gradle        # Gradle section
-  maven         # Maven section
   node          # Node.js section
   ruby          # Ruby section
   elixir        # Elixir section
@@ -30,7 +28,6 @@ SPACESHIP_PROMPT_ORDER=(
   aws           # Amazon Web Services section
   venv          # virtualenv section
   conda         # conda virtualenv section
-  pyenv         # Pyenv section
   dotnet        # .NET section
   ember         # Ember.js section
   kubectl       # Kubectl context section
@@ -45,9 +42,11 @@ SPACESHIP_PROMPT_ORDER=(
   char          # Prompt character
 )
 
-plugins=(git zsh-autosuggestions zsh-vi-mode zsh-z zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-z zsh-syntax-highlighting spaceship-vi-mode spaceship-ember)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+
+# export RPS1="%{$reset_color%}"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -58,6 +57,7 @@ else
 fi
 
 alias nrd="npm run dev"
+alias pn="pnpm"
 alias wta="~/.dotfiles/gwta.sh"
 
 alias pbcopy="xclip -sel clip"
@@ -102,6 +102,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 GOPATH=~/go
+export PATH=$PATH:/usr/local/go/bin
+
 
 lg()
 {
@@ -133,19 +135,21 @@ fi
 
 
 
-# pnpm
-export PNPM_HOME="/home/viktor/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
 export DENO_INSTALL="/home/viktor/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
-# pnpm end
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # bun completions
 [ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
 
+spaceship_vi_mode_enable
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+
+# pnpm
+export PNPM_HOME="/home/viktor/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

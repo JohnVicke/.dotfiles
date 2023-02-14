@@ -1,4 +1,4 @@
-local color_scheme = "catppuccin" --"gruvbox"
+local color_scheme = "catppuccin" -- "gruvbox"
 
 function GruvBoxSetup()
 	vim.g.gruvbox_contrast_dark = "soft"
@@ -13,16 +13,8 @@ function CatppuccinSetup()
 	require("catppuccin").setup()
 end
 
-if color_scheme == "poimandres" then
-	PoimandresSetup()
-end
-
 if color_scheme == "catppuccin" then
 	CatppuccinSetup()
-end
-
-if color_scheme == "tokyonight" then
-	TokyonightSetup()
 end
 
 vim.g.johnvicke_colorscheme = color_scheme

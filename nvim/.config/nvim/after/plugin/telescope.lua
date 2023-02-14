@@ -1,13 +1,8 @@
 local builtin = require("telescope.builtin")
 local actions = require("telescope.actions")
 
-local nnoremap = require("johnvicke.keymap").nnoremap
+local nnmap = require("johnvicke.keymap").nnoremap
 
-function telescope_buffer_dir()
-	return vim.fn.expand("%:p:h")
-end
-
-require("telescope").load_extension("file_browser")
 require("telescope").setup({
 	defaults = {
 		prompt_prefix = " >",
@@ -38,31 +33,22 @@ require("telescope").setup({
 	},
 })
 
-nnoremap("<leader>fr", function()
-	require("telescope").extensions.file_browser.file_browser({
-		respect_gitignore = false,
-		hidden = true,
-		grouped = true,
-		initial_mode = "normal",
-		layout_config = { height = 40 },
-	})
-end)
-
-nnoremap("<leader>fe", function()
-	require("telescope").extensions.file_browser.file_browser({
-		path = "%:p:h",
-		cwd = telescope_buffer_dir(),
-		respect_gitignore = true,
-		hidden = true,
-		grouped = true,
-		initial_mode = "normal",
-		layout_config = { height = 40 },
-	})
-end)
-
-nnoremap("<leader>ff", function()
+nnmap("<leader>ff", function()
 	builtin.find_files()
-end)
-nnoremap("<leader>fg", function()
+end, { desc = "Telescope [F]ind [F]iles" })
+
+nnmap("<leader>fg", function()
 	builtin.live_grep()
-end)
+end, { desc = "Telescope [F]ind [G]rep" })
+
+nnmap("<leader>fr", function()
+	builtin.lsp_references()
+end, { desc = "Telescope [F]ind [R]eferences" })
+
+nnmap("<leader>fs", function()
+	builtin.lsp_document_symbols()
+end, { desc = "Telescope [F]ind [S]ymbols" })
+
+nnmap("gd", function()
+	builtin.lsp_definitions()
+end, { desc = "Telescope [G]o [D]efinition" })

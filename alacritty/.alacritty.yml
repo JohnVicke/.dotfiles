@@ -23,36 +23,12 @@ font:
     y: 0
 
 
-  # Selection colors
-  #
-  # Colors which should be used to draw the selection area.
-  #
-  # Allowed values are CellForeground/CellBackground, which reference the
-  # affected cell, or hexadecimal colors like #ff00ff.
-
-# Import additional configuration files
-#
-# Imports are loaded in order, skipping all missing files, with the importing
-# file being loaded last. If a field is already present in a previous import, it
-# will be replaced.
-#
-# All imports must either be absolute paths starting with `/`, or paths relative
-# to the user's home directory starting with `~/`.
 import:
-  - ~/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml
+   - ~/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml
+   # - ~/.dotfiles/alacritty/gruvbox/gruvbox-material_hard_dark.yml
 
-# Any items in the `env` entry below will be added as
-# environment variables. Some entries may override variables
-# set by alacritty itself.
 env:
   TERM: xterm-256color
-  # TERM: variable
-  #
-  # This value is used to set the `$TERM` environment variable for
-  # each instance of Alacritty. If it is not present, alacritty will
-  # check the local terminfo database and use `alacritty` if it is
-  # available, otherwise `xterm-256color` is used.
-  #TERM: alacritty
 
 window:
         opacity: 1
