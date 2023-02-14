@@ -11,6 +11,7 @@ require("nvim-treesitter.configs").setup({
 		"svelte",
 		"tsx",
 		"typescript",
+		"markdown",
 	},
 	highlight = { enable = true },
 })

@@ -32,17 +32,18 @@ vim.diagnostic.config({
 })
 
 local function on_attach(client, bufnr)
-	nnoremap("gd", vim.lsp.buf.definition, { desc = "Go to definition [LSP]", buffer = bufnr })
+	-- nnoremap("gd", vim.lsp.buf.definition, { desc = "Go to definition [LSP]", buffer = bufnr })
 	nnoremap("gt", vim.lsp.buf.type_definition, { desc = "Go to type definition", buffer = bufnr })
 	nnoremap("gD", vim.lsp.buf.declaration, { desc = "Go to declaration [LSP]", buffer = bufnr })
-	nnoremap("gi", vim.lsp.buf.implementation, { desc = "Go to implentation [LSP]", buffer = bufnr })
+	nnoremap("gi", vim.lsp.buf.implementation, { desc = "Go to implementation [LSP]", buffer = bufnr })
 	nnoremap("gw", vim.lsp.buf.document_symbol, { desc = "Search document symbols [LSP]", buffer = bufnr })
 	nnoremap("gW", vim.lsp.buf.workspace_symbol, { desc = "Search workspace symbols [LSP]", buffer = bufnr })
 	nnoremap("gr", vim.lsp.buf.references, { desc = "Show references [LSP]", buffer = bufnr })
 	nnoremap("<c-k>", vim.lsp.buf.signature_help, { desc = "Show signature help [LSP]", buffer = bufnr })
 
 	-- LSP Saga keymaps
-	nnoremap("K", "<Cmd>Lspsaga hover_doc<CR>", { desc = "Hover documentation [LSP]", buffer = bufnr })
+	nnoremap("K", "<Cmd>Lspsaga hover_doc<CR>", { desc = "[K] Hover documentation [LSP]", buffer = bufnr })
+	nnoremap("<leader>pd", "<Cmd>Lspsaga peek_definition<CR>", { desc = "[P]eek [D]efinition [LSP]", buffer = bufnr })
 	nnoremap("<leader>ca", "<Cmd>Lspsaga code_action<CR>", { desc = "Code action [LSP]", buffer = bufnr })
 	nnoremap("<leader>rn", "<Cmd>Lspsaga rename<CR>", { desc = "Rename [LSP]", buffer = bufnr })
 	nnoremap(

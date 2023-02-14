@@ -8,6 +8,8 @@ plugins=(git zsh-autosuggestions zsh-vi-mode zsh-z zsh-syntax-highlighting)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 
+# export RPS1="%{$reset_color%}"
+
 source $ZSH/oh-my-zsh.sh
 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -62,6 +64,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 GOPATH=~/go
+export PATH=$PATH:/usr/local/go/bin
+
 
 lg()
 {
@@ -93,19 +97,15 @@ fi
 
 
 
-# pnpm
-export PNPM_HOME="/home/viktor/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
 export DENO_INSTALL="/home/viktor/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
-# pnpm end
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # bun completions
 [ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
 
+spaceship_vi_mode_enable
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
