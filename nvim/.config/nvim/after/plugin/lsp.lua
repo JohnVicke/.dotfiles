@@ -104,7 +104,7 @@ require("mason-lspconfig").setup({
 		"jsonls",
 		"pylsp",
 		"rust_analyzer",
-		"sumneko_lua",
+		"lua_ls",
 		"tailwindcss",
 		"tsserver",
 		"yamlls",
@@ -163,7 +163,7 @@ local lua_rtp = vim.split(package.path, ";")
 table.insert(lua_rtp, "lua/?.lua")
 table.insert(lua_rtp, "lua/?/init.lua")
 
-lspconfig.sumneko_lua.setup(vim.tbl_extend("force", default_config, {
+lspconfig.lua_ls.setup(vim.tbl_extend("force", default_config, {
 	settings = {
 		Lua = {
 			runtime = {
