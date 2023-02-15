@@ -18,6 +18,7 @@ else
   export EDITOR='nvim'
 fi
 
+alias t="tmux"
 alias nrd="npm run dev"
 alias pn="pnpm"
 alias wta="~/.dotfiles/gwta.sh"
@@ -105,7 +106,6 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # bun completions
 [ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
 
-spaceship_vi_mode_enable
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
