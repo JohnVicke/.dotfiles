@@ -1,18 +1,6 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 font:
-  normal:
-    family: Fira Code
-    style: Regular
-
-  bold:
-    family: Fira Code
-    style: Bold
-
-  italic:
-    family: Fira Code
-    style: Italic
-
-  size: 12.0
+  size: 20.0
 
   offset:
     x: 0
@@ -162,8 +150,6 @@ window:
     #style: Bold Italic
 
   # Point size
-font:
-        size: 13.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter

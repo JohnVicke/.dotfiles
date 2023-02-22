@@ -57,6 +57,8 @@ alias ll='exa -1 --color=always --group-directories-first'  # long format
 alias ls='exa -a1 --color=always --group-directories-first' # my preferred listing
 alias bat="batcat"
 
+alias run-script='/home/viktor/.dotfiles/scripts/pm-run.sh'
+
 alias kubectl="minikube kubectl --"
 
 export ANDROID_HOME=$HOME/Android/Sdk
