@@ -49,6 +49,10 @@ nnmap("<leader>fs", function()
 	builtin.lsp_document_symbols()
 end, { desc = "Telescope [F]ind [S]ymbols" })
 
+nnmap("<leader>cf", function()
+	builtin.lsp_document_symbols()
+end, { desc = "Telescope [C]urrent Buffer Fuzzy [F]ind" })
+
 nnmap("gd", function()
 	builtin.lsp_definitions()
 end, { desc = "Telescope [G]o [D]efinition" })
