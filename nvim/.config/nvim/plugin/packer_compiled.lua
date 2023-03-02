@@ -154,11 +154,6 @@ _G.packer_plugins = {
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["lazygit.nvim"] = {
-    loaded = true,
-    path = "/home/viktor/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
-    url = "https://github.com/kdheepak/lazygit.nvim"
-  },
   ["lsp_extensions.nvim"] = {
     loaded = true,
     path = "/home/viktor/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim",

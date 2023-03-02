@@ -1,8 +1,6 @@
 return require("packer").startup(function()
 	use("wbthomason/packer.nvim")
 
-	use("kdheepak/lazygit.nvim")
-
 	use("nvim-treesitter/nvim-treesitter", {
 		run = ":TSUpdate",
 	})
