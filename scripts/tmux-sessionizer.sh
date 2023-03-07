@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
+personal_projects=(~/dev/personal)
+cygni_projects=(~/dev/work/cygni)
+eniro_projects=(~/dev/work/eniro)
+north_stat_projects=(~/dev/work/north-stat)
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/dev/personal ~/dev/work/eniro ~/dev/work/cygni -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find $personal_projects $eniro_projects $cygni_projects $north_stat_projects -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
