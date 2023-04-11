@@ -18,6 +18,7 @@ return require("packer").startup(function()
 
 	use("lewis6991/gitsigns.nvim")
 	use("dinhhuy258/git.nvim")
+	use({ "projekt0n/github-nvim-theme", tag = "v0.0.7" })
 
 	-- Telescope
 	use("nvim-lua/plenary.nvim")

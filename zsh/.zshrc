@@ -112,3 +112,14 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 eval "$(starship init zsh)"
+
+# fnm
+export PATH="/home/viktor/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd)"
+
+
+export PATH="$PATH:/home/viktor/.kenv/bin"
+# pnpm
+export PNPM_HOME="/home/viktor/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

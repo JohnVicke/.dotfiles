@@ -1,4 +1,4 @@
-local color_scheme = "catppuccin" -- "gruvbox"
+local color_scheme = "github_dark_default" -- "github_dark" -- "gruvbox"
 
 function GruvBoxSetup()
 	vim.g.gruvbox_contrast_dark = "soft"
@@ -7,6 +7,29 @@ function GruvBoxSetup()
 	vim.g.gruvbox_invert_selection = "0"
 	vim.opt.background = "dark"
 end
+
+function GithubSetup()
+	require("github-theme").setup({
+		theme_style = "dark_default",
+		function_style = "italic",
+		sidebars = { "qf", "vista_kind", "terminal", "packer" },
+
+		-- Change the "hint" color to the "orange" color, and make the "error" color bright red
+		colors = { hint = "orange", error = "#ff0000" },
+
+		-- Overwrite the highlight groups
+		overrides = function(c)
+			return {
+				htmlTag = { fg = c.red, bg = "#282c34", sp = c.hint, style = "underline" },
+				DiagnosticHint = { link = "LspDiagnosticsDefaultHint" },
+				-- this will remove the highlight groups
+				TSField = {},
+			}
+		end,
+	})
+end
+
+GithubSetup()
 
 function CatppuccinSetup()
 	vim.g.catppuccin_flavour = "mocha"
@@ -27,12 +50,4 @@ end
 
 hl("LineNr", {
 	fg = "#6c7086",
-})
-
-hl("netrwDir", {
-	fg = "#5eacd3",
-})
-
-hl("Normal", {
-	bg = "none",
 })

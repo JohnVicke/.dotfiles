@@ -52,6 +52,7 @@
         "/home/viktor/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp/after",
         "/home/viktor/.local/share/nvim/site/pack/packer/start/cmp_luasnip/after",
         "/home/viktor/.config/nvim/after",
-        "${3rd}/luassert/library"
+        "${3rd}/luassert/library",
+        "${3rd}/luv/library"
     ]
 }

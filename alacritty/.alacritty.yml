@@ -1,6 +1,6 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 font:
-  size: 20.0
+  size: 16.0
 
   offset:
     x: 0
@@ -10,16 +10,15 @@ font:
     x: 0
     y: 0
 
-
-import:
-   - ~/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml
-   # - ~/.dotfiles/alacritty/gruvbox/gruvbox-material_hard_dark.yml
+# import:
+  # - ~/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml
+  # - ~/.dotfiles/alacritty/gruvbox/gruvbox-material_hard_dark.yml
 
 env:
   TERM: xterm-256color
 
 window:
-        opacity: 1
+        opacity: 1.0
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. The number of columns
