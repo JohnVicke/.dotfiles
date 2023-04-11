@@ -83,6 +83,8 @@ return require("packer").startup(function()
 
 	use("princejoogie/tailwind-highlight.nvim")
 
+	use("jose-elias-alvarez/null-ls.nvim")
+
 	use({
 		"creativenull/diagnosticls-configs-nvim",
 	})

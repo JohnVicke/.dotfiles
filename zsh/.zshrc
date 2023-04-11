@@ -51,10 +51,10 @@ alias .4='cd ../../../../'             # Go back 4 directory levels
 alias .5='cd ../../../../../'          # Go back 5 directory levels
 alias .6='cd ../../../../../../'       # Go back 6 directory levels
 
-alias l='exa --color=always --group-directories-first'      # some files and dirs
+alias l='exa --color=always --group-directories-first'    
 alias la='exa --header --long'  
-alias ll='exa -1 --color=always --group-directories-first'  # long format
-alias ls='exa -a1 --color=always --group-directories-first' # my preferred listing
+alias ll='exa -1 --color=always --group-directories-first' 
+alias ls='exa -a1 --color=always --group-directories-first' 
 alias bat="batcat"
 
 alias run-script='/home/viktor/.dotfiles/scripts/pm-run.sh'

@@ -1,5 +1,6 @@
 local Remap = require("johnvicke.keymap")
 local nnoremap = Remap.nnoremap
+local vnoremap = Remap.vnoremap
 local diagnosticls = require("diagnosticls-configs")
 local lspconfig = require("lspconfig")
 local format_group = vim.api.nvim_create_augroup("LspFormatGroup", {})
@@ -32,6 +33,12 @@ vim.diagnostic.config({
 })
 
 local function on_attach(client, bufnr)
+	local capabilities = client.server_capabilities
+
+	if capabilities.codeActionProvider then
+		nnoremap("<leader>ca", "<Cmd>Lspsaga code_action<CR>", { desc = "Code action [LSP]", buffer = bufnr })
+		vnoremap("<leader>ca", "<Cmd>Lspsaga code_action<CR>", { desc = "Code action [LSP]", buffer = bufnr })
+	end
 	-- nnoremap("gd", vim.lsp.buf.definition, { desc = "Go to definition [LSP]", buffer = bufnr })
 	nnoremap("gt", vim.lsp.buf.type_definition, { desc = "Go to type definition", buffer = bufnr })
 	nnoremap("gD", vim.lsp.buf.declaration, { desc = "Go to declaration [LSP]", buffer = bufnr })
@@ -93,23 +100,7 @@ require("mason-tool-installer").setup({
 		"codelldb",
 	},
 })
-require("mason-lspconfig").setup({
-	ensure_installed = {
-		"bashls",
-		"cssls",
-		"diagnosticls",
-		"dockerls",
-		"gopls",
-		"html",
-		"jsonls",
-		"pylsp",
-		"rust_analyzer",
-		"tailwindcss",
-		"tsserver",
-		"yamlls",
-	},
-	automatic_installation = false,
-})
+require("mason-lspconfig").setup({})
 
 -- Language Servers
 lspconfig.pylsp.setup(default_config)

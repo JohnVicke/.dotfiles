@@ -1,4 +1,3 @@
-local nnoremap = require("johnvicke.keymap").nnoremap
 local vnoremap = require("johnvicke.keymap").vnoremap
 
 require("refactoring").setup({
