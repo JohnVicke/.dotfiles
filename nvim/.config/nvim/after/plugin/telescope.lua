@@ -31,6 +31,7 @@ require("telescope").setup({
 			},
 		},
 	},
+	["ui-select"] = {},
 })
 
 nnmap("<leader>ff", function()

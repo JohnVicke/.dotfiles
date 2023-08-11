@@ -1,4 +1,4 @@
-local color_scheme = "gruvbox" --"github_dark_default" -- "github_dark" -- "gruvbox"
+local color_scheme = "catppuccin" --"github_dark_default" -- "github_dark" -- "gruvbox"
 
 function GruvBoxSetup()
 	vim.g.gruvbox_contrast_dark = "soft"

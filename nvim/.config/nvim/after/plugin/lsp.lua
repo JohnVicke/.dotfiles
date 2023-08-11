@@ -6,6 +6,8 @@ local lspconfig = require("lspconfig")
 local format_group = vim.api.nvim_create_augroup("LspFormatGroup", {})
 local format_opts = { async = false, timeout_ms = 2500 }
 
+require("mason").setup()
+
 require("lspsaga").setup({ ui = { border = "rounded", theme = "round" } })
 
 local function register_fmt_keymap(name, bufnr)
@@ -21,9 +23,25 @@ local function register_fmt_autosave(name, bufnr)
 		buffer = bufnr,
 		callback = function()
 			vim.lsp.buf.format(vim.tbl_extend("force", format_opts, { name = name, bufnr = bufnr }))
+			OrganizeImports(1000)
 		end,
 		desc = "Format on save [LSP]",
 	})
+end
+
+function OrganizeImports(timeoutms)
+	local params = vim.lsp.util.make_range_params()
+	params.context = { only = { "source.organizeImports" } }
+	local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeoutms)
+	for _, res in pairs(result or {}) do
+		for _, r in pairs(res.result or {}) do
+			if r.edit then
+				vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+			else
+				vim.lsp.buf.execute_command(r.command)
+			end
+		end
+	end
 end
 
 vim.diagnostic.config({
@@ -73,6 +91,10 @@ local function on_attach(client, bufnr)
 		register_fmt_keymap(client.name, bufnr)
 		register_fmt_autosave(client.name, bufnr)
 	end
+
+	if client.name == "gopls" then
+		register_fmt_autosave(client.name, bufnr)
+	end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -98,6 +120,8 @@ require("mason-tool-installer").setup({
 		"prettier",
 		"stylua",
 		"codelldb",
+		"rome",
+		"gopls",
 	},
 })
 require("mason-lspconfig").setup({})
@@ -110,8 +134,33 @@ lspconfig.dockerls.setup(default_config)
 lspconfig.html.setup(default_config)
 lspconfig.jsonls.setup(default_config)
 lspconfig.yamlls.setup(default_config)
-lspconfig.gopls.setup(default_config)
 lspconfig.prismals.setup(default_config)
+lspconfig.astro.setup(default_config)
+lspconfig.rome.setup(default_config)
+lspconfig.gopls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = {
+		gopls = {
+			gofumpt = true,
+		},
+	},
+	flags = {
+		debounce_text_changes = 150,
+	},
+})
+lspconfig.golangci_lint_ls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = {
+		gopls = {
+			gofumpt = true,
+		},
+	},
+	flags = {
+		debounce_text_changes = 150,
+	},
+})
 
 -- Tailwind CSS
 local tw_highlight = require("tailwind-highlight")

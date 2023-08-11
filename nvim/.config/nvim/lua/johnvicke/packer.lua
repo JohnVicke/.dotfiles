@@ -12,6 +12,7 @@ return require("packer").startup(function()
 	use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
 
 	use("f-person/git-blame.nvim")
+	use({ "nvim-telescope/telescope-ui-select.nvim" })
 
 	use("gruvbox-community/gruvbox")
 	use({ "catppuccin/nvim", as = "catppuccin" })

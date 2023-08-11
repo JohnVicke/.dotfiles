@@ -10,8 +10,8 @@ font:
     x: 0
     y: 0
 
-# import:
-  # - ~/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml
+import:
+  - ~/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml
   # - ~/.dotfiles/alacritty/gruvbox/gruvbox-material_hard_dark.yml
 
 env:

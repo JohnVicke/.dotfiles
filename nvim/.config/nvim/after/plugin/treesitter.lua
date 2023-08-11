@@ -12,6 +12,13 @@ require("nvim-treesitter.configs").setup({
 		"tsx",
 		"typescript",
 		"markdown",
+		"astro",
 	},
 	highlight = { enable = true },
+})
+
+vim.filetype.add({
+	extension = {
+		astro = "astro",
+	},
 })
