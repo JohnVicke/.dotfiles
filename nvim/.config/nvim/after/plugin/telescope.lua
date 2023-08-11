@@ -50,7 +50,7 @@ nnmap("<leader>fs", function()
 end, { desc = "Telescope [F]ind [S]ymbols" })
 
 nnmap("<leader>cf", function()
-	builtin.lsp_document_symbols()
+	builtin.current_buffer_fuzzy_find()
 end, { desc = "Telescope [C]urrent Buffer Fuzzy [F]ind" })
 
 nnmap("gd", function()

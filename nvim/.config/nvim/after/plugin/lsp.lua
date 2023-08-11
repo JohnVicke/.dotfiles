@@ -6,6 +6,7 @@ local lspconfig = require("lspconfig")
 local format_group = vim.api.nvim_create_augroup("LspFormatGroup", {})
 local format_opts = { async = false, timeout_ms = 2500 }
 
+require("mason").setup()
 require("lspsaga").setup({ ui = { border = "rounded", theme = "round" } })
 
 local function register_fmt_keymap(name, bufnr)
@@ -98,6 +99,7 @@ require("mason-tool-installer").setup({
 		"prettier",
 		"stylua",
 		"codelldb",
+		"rome",
 	},
 })
 require("mason-lspconfig").setup({})
@@ -112,6 +114,7 @@ lspconfig.jsonls.setup(default_config)
 lspconfig.yamlls.setup(default_config)
 lspconfig.gopls.setup(default_config)
 lspconfig.prismals.setup(default_config)
+lspconfig.rome.setup(default_config)
 
 -- Tailwind CSS
 local tw_highlight = require("tailwind-highlight")
