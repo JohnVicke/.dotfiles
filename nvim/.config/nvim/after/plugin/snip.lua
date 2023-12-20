@@ -8,7 +8,7 @@ ls.config.set_config({
 	enable_auto_snippets = true,
 })
 
-require("luasnip.loaders.from_snipmate").lazy_load({ paths = { "./snippets" } })
+require("luasnip.loaders.from_snipmate").lazy_load({ paths = { "../../snippets" } })
 
 inoremap("<c-k>", function()
 	if ls.expand_or_jumpable() then

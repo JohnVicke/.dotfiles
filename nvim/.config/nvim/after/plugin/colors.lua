@@ -1,4 +1,4 @@
-local color_scheme = "catppuccin" --"github_dark_default" -- "github_dark" -- "gruvbox"
+local color_scheme = "solarized-osaka" -- "catppuccin" --"github_dark_default" -- "github_dark" -- "gruvbox"
 
 function GruvBoxSetup()
 	vim.g.gruvbox_contrast_dark = "soft"
@@ -29,8 +29,6 @@ function GithubSetup()
 	})
 end
 
-GithubSetup()
-
 function CatppuccinSetup()
 	vim.g.catppuccin_flavour = "mocha"
 	require("catppuccin").setup()
@@ -38,6 +36,14 @@ end
 
 if color_scheme == "catppuccin" then
 	CatppuccinSetup()
+end
+
+if color_scheme == "github_dark" then
+	GithubSetup()
+end
+
+if color_scheme == "gruvbox" then
+	GruvBoxSetup()
 end
 
 vim.g.johnvicke_colorscheme = color_scheme

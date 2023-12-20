@@ -17,6 +17,9 @@
 [includeIf "gitdir:~/dev/work/north-stat/**"]
   path = ~/.config/git/personal
 
+[includeIf "gitdir:~/dev/work/bole-bear/**"]
+  path = ~/.config/git/bole-bear
+
 [color]
   ui = auto
 

@@ -39,6 +39,8 @@ vim.opt.mouse = "a"
 vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.relativenumber = true
+vim.opt.colorcolumn = ""
+vim.opt.guicursor = ""
 
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })

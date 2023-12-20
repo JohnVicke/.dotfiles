@@ -1,4 +1,5 @@
 local vnoremap = require("johnvicke.keymap").vnoremap
+local nnoremap = require("johnvicke.keymap").nnoremap
 
 require("refactoring").setup({
 	prompt_func_return_type = {
@@ -23,6 +24,18 @@ require("refactoring").setup({
 	print_var_statements = {},
 })
 
-vnoremap("<leader>rf", function()
+vnoremap("<leader>re", function()
 	require("refactoring").refactor("Extract Function")
-end)
+end, { desc = "[R]efactor [E]xtract [F]unction" })
+
+vnoremap("<leader>rfe", function()
+	require("refactoring").refactor("Extract Function To File")
+end, { desc = "[R]efactor [Function] [E]xtract to [F]ile" })
+
+nnoremap("<leader>rb", function()
+	require("refactoring").refactor("Extract Block")
+end, { desc = "[R]efactor [B]lock" })
+
+nnoremap("<leader>rfb", function()
+	require("refactoring").refactor("Extract Block To File")
+end, { desc = "[R]efactor to [F]ile [B]lock " })

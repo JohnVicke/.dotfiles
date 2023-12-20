@@ -6,6 +6,9 @@ vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSig
 
 require("neo-tree").setup({
 	close_if_last_window = true,
+	window = {
+		position = "float",
+	},
 })
 
 vim.keymap.set("n", "<Leader>tt", "<Cmd>Neotree reveal toggle<CR>", { desc = "Toggle file tree" })

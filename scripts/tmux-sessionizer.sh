@@ -3,7 +3,6 @@
 personal_projects=(~/dev/personal)
 cygni_projects=(~/dev/work/cygni)
 eniro_projects=(~/dev/work/eniro)
-north_stat_projects=(~/dev/work/north-stat)
 
 if [[ $# -eq 1 ]]; then
     selected=$1

@@ -4,7 +4,7 @@ fi
 
 export ZSH="/home/viktor/.oh-my-zsh"
 
-plugins=(git zsh-autosuggestions zsh-vi-mode zsh-z zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-vi-mode zsh-z zsh-syntax-highlighting zsh-npm-scripts-autocomplete)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 
@@ -118,9 +118,21 @@ eval "$(starship init zsh)"
 export PATH="/home/viktor/.local/share/fnm:$PATH"
 eval "$(fnm env --use-on-cd)"
 
+export FLYCTL_INSTALL="/home/viktor/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
+export PATH="$PATH:/home/viktor/.dotfiles/scripts"
 export PATH="$PATH:/home/viktor/.kenv/bin"
 # pnpm
 export PNPM_HOME="/home/viktor/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 # pnpm end
+
+# Turso
+export PATH="/home/viktor/.turso:$PATH"
+
+# Personal scripts
+export PATH="$HOME/.dotfiles/scripts:$PATH"

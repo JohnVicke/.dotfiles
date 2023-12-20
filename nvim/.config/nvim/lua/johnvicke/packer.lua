@@ -20,10 +20,19 @@ return require("packer").startup(function()
 	use("lewis6991/gitsigns.nvim")
 	use("dinhhuy258/git.nvim")
 	use({ "projekt0n/github-nvim-theme", tag = "v0.0.7" })
+	use({ "craftzdog/solarized-osaka.nvim" })
 
 	-- Telescope
 	use("nvim-lua/plenary.nvim")
-	use("nvim-telescope/telescope.nvim")
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = {
+			{ "nvim-telescope/telescope-live-grep-args.nvim" },
+		},
+		config = function()
+			require("telescope").load_extension("live_grep_args")
+		end,
+	})
 
 	use("ThePrimeagen/harpoon")
 
@@ -42,7 +51,7 @@ return require("packer").startup(function()
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/nvim-cmp")
-	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
+	use({ "L3MON4D3/LuaSnip" })
 	use("saadparwaiz1/cmp_luasnip")
 	use("onsails/lspkind-nvim")
 	use("nvim-lua/lsp_extensions.nvim")

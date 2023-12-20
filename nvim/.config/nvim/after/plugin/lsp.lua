@@ -120,7 +120,7 @@ require("mason-tool-installer").setup({
 		"prettier",
 		"stylua",
 		"codelldb",
-		"rome",
+		"biome",
 		"gopls",
 	},
 })
@@ -136,7 +136,7 @@ lspconfig.jsonls.setup(default_config)
 lspconfig.yamlls.setup(default_config)
 lspconfig.prismals.setup(default_config)
 lspconfig.astro.setup(default_config)
-lspconfig.rome.setup(default_config)
+lspconfig.biome.setup(default_config)
 lspconfig.gopls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,

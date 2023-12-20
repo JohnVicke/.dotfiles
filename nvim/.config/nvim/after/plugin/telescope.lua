@@ -1,5 +1,6 @@
 local builtin = require("telescope.builtin")
 local actions = require("telescope.actions")
+local lga = require("telescope").extensions.live_grep_args
 
 local nnmap = require("johnvicke.keymap").nnoremap
 
@@ -39,7 +40,7 @@ nnmap("<leader>ff", function()
 end, { desc = "Telescope [F]ind [F]iles" })
 
 nnmap("<leader>fg", function()
-	builtin.live_grep()
+	lga.live_grep_args()
 end, { desc = "Telescope [F]ind [G]rep" })
 
 nnmap("<leader>fr", function()
@@ -53,6 +54,10 @@ end, { desc = "Telescope [F]ind [S]ymbols" })
 nnmap("<leader>cf", function()
 	builtin.current_buffer_fuzzy_find()
 end, { desc = "Telescope [C]urrent Buffer Fuzzy [F]ind" })
+
+nnmap("<leader>of", function()
+	builtin.oldfiles()
+end, { desc = "Telescope [O]ld [F]iles" })
 
 nnmap("gd", function()
 	builtin.lsp_definitions()

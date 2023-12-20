@@ -13,6 +13,7 @@ require("nvim-treesitter.configs").setup({
 		"typescript",
 		"markdown",
 		"astro",
+		"gitignore",
 	},
 	highlight = { enable = true },
 })
@@ -20,5 +21,8 @@ require("nvim-treesitter.configs").setup({
 vim.filetype.add({
 	extension = {
 		astro = "astro",
+		mdx = "mdx",
 	},
 })
+
+vim.treesitter.language.register("markdown", "mdx")
