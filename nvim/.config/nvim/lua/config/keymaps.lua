@@ -1,6 +1,7 @@
-local m = require("johnvicke.keymap")
-local eslint = require("johnvicke.eslint")
-
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+local m = require("config.keymap")
 m.inoremap("kj", "<ESC>")
 m.nnoremap("<leader>q", ":q<CR>")
 m.nnoremap("<leader>x", ":qa<CR>")
@@ -9,7 +10,3 @@ m.nnoremap("<leader>y", '"+y')
 m.vnoremap("<leader>y", '"+y')
 m.nnoremap("<C-u>", "<C-u>zz")
 m.nnoremap("<C-d>", "<C-d>zz")
-
-m.nnoremap("<leader>efa", function()
-	eslint.fix_current_file()
-end)
