@@ -1,5 +1,4 @@
-local m = require("johnvicke.keymap")
-local eslint = require("johnvicke.eslint")
+local m = require("johnvicke.util")
 
 m.inoremap("kj", "<ESC>")
 m.nnoremap("<leader>q", ":q<CR>")
@@ -9,7 +8,3 @@ m.nnoremap("<leader>y", '"+y')
 m.vnoremap("<leader>y", '"+y')
 m.nnoremap("<C-u>", "<C-u>zz")
 m.nnoremap("<C-d>", "<C-d>zz")
-
-m.nnoremap("<leader>efa", function()
-	eslint.fix_current_file()
-end)
