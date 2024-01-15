@@ -7,5 +7,8 @@ return {
         position = "float",
       },
     },
+    keys = {
+      { "<leader>fe", "<Cmd>Neotree reveal toggle<CR>", desc = "Toggle NeoTree" },
+    },
   },
 }

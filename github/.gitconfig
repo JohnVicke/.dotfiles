@@ -30,6 +30,7 @@
   uncommit = reset --soft HEAD~1
   reword = commit --amend
   lease = push --force-with-lease
+  trigger-build = !git commit --allow-empty -m "🛠️ Triggering build process" && git push
 
 [core]
 	editor = nvim 
