@@ -1,13 +1,13 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 font:
   bold:
-    family: FiraCode Nerd Font
+    family: MonaspiceAr Nerd Font
     style: Bold
   normal:
-    family: FiraCode Nerd Font
+    family: MonaspiceAr Nerd Font
     style: Regular
   italic:
-    family: FiraCode Nerd Font
+    family: MonaspiceAr Nerd Font
     style: Italic
   size: 14.0
 

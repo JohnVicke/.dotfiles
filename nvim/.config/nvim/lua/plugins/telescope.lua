@@ -7,4 +7,7 @@ return {
       require("telescope").load_extension("fzf")
     end,
   },
+  opts = function(_, opts)
+    opts.defaults.path_display = { "smart" }
+  end,
 }
