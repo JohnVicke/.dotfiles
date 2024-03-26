@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+addToPathFront $
+addToPathFront $BUN_INSTALL/bin
+addToPathFront $HOME/.local/share/fnm
+
+addToPath /usr/local/go/bin
+addToPath $HOME/.local/scripts
+addToPath $GOPATH/bin
+addToPath $HOME/.yarn/bin
+addToPath $HOME/.cargo/bin
+addToPath $HOME/.rustup
+addToPath $HOME/Android/Sdk
+addToPath $ANDROID_HOME/emulator
+addToPath $ANDROID_HOME/tools
+addToPath $ANDROID_HOME/tools/bin
+addToPath $ANDROID_HOME/platform-tools
+addToPath /opt/nvim/

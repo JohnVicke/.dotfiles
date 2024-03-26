@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for file in ./install/*; do
+g$file
+done

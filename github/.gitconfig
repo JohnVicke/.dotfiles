@@ -5,20 +5,11 @@
 [includeIf "gitdir:~/dev/personal/**"]
   path = ~/.config/git/personal
 
-[includeIf "gitdir:~/dev/work/eniro/**"]
-  path = ~/.config/git/eniro
-
-[includeIf "gitdir:~/dev/work/cygni/**"]
-  path = ~/.config/git/cygni
+[includeIf "gitdir:~/dev/anyfin/**"]
+  path = ~/.config/git/anyfin
 
 [includeIf "gitdir:~/.dotfiles/**"]
   path = ~/.config/git/personal
-
-[includeIf "gitdir:~/dev/work/north-stat/**"]
-  path = ~/.config/git/personal
-
-[includeIf "gitdir:~/dev/work/bole-bear/**"]
-  path = ~/.config/git/bole-bear
 
 [color]
   ui = auto

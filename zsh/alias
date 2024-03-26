@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+alias t="tmux"
+alias pn="pnpm"
+
+alias pbcopy="xclip -sel clip"
+alias pbpaste="xclip -sel clip -o"
+
+alias ^L=clear
+
+alias c="code"
+alias vim="nvim"
+alias vi="nvim"
+alias v="nvim"
+alias oldvim="vim"
+alias nvimdiff="nvim -d"
+
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+alias ..='cd ../'
+alias ...='cd ../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+alias .6='cd ../../../../../../'
+
+alias l='exa --color=always --group-directories-first'
+alias la='exa --header --long'
+alias ll='exa -1 --color=always --group-directories-first'
+alias ls='exa -a1 --color=always --group-directories-first'
+alias bat="batcat"

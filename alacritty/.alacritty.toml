@@ -1,0 +1,30 @@
+import = ["/home/viktor/.dotfiles/alacritty/catppuccin/catppuccin-mocha.yml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 14.0
+
+[font.bold]
+family = "MonaspiceAr Nerd Font"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "MonaspiceAr Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "MonaspiceAr Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[window]
+opacity = 0.9
