@@ -9,10 +9,8 @@ alias pbpaste="xclip -sel clip -o"
 alias ^L=clear
 
 alias c="code"
-alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
-alias oldvim="vim"
 alias nvimdiff="nvim -d"
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'

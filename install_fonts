@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-$FONTS_LOCATION="./fonts/usr/local/share/fonts"
-mkdir -p $FONTS_LOCATION/monaspace
-tar -xvf ./Monaspace.tar.xz $FONTS_LOCATION/monaspace

@@ -1,0 +1,5 @@
+wm.gaps.inner.size: 0
+wm.bar.position: top
+wm.gaps.focus_follows_mouse: yes
+wm.bindsym.1: Ctrl+d
+

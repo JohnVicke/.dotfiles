@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-addToPathFront $
+addToPath /opt/nvim-linux64/bin
 addToPathFront $BUN_INSTALL/bin
 addToPathFront $HOME/.local/share/fnm
 
@@ -15,4 +15,3 @@ addToPath $ANDROID_HOME/emulator
 addToPath $ANDROID_HOME/tools
 addToPath $ANDROID_HOME/tools/bin
 addToPath $ANDROID_HOME/platform-tools
-addToPath /opt/nvim/

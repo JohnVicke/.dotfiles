@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-export STOW_FOLDERS="alacritty,github,nvim,bin,starship,tmux,zsh"
+export STOW_FOLDERS="alacritty,github,nvim,bin,starship,tmux,zsh,regolith"
 export BUN_INSTALL="$HOME/.bun"
 export ZSH="$HOME/.oh-my-zsh"
 export PNPM_HOME="$HOME/.local/share/pnpm"
