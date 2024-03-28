@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+work_log_dir="$HOME/dev/work_log"
+
+mkdir -p $work_log_dir
+
+work_start() {
+	echo "work work..."
+	date +"%s" >"$work_log_dir/start_time.txt"
+}
+
+work_end() {
+	echo $start_time
+	end_time=$(date +"%s")
+	echo "Work ended."
+	calculate_work_time
+	append_to_file
+}
+
+calculate_work_time() {
+	end_time=$(date +"%s")
+	start_time=$(cat "$work_log_dir/start_time.txt")
+	duration=$((end_time - start_time))
+	hours=$((duration / 3600))
+	minutes=$(((duration % 3600) / 60))
+	seconds=$((duration % 60))
+}
+
+info() {
+	calculate_work_time
+	total_seconds=$((hours * 3600 + minutes * 60 + seconds))
+	remaining_seconds=$((8 * 3600 - total_seconds))
+	remaining_hours=$((remaining_seconds / 3600))
+	remaining_minutes=$(((remaining_seconds % 3600) / 60))
+	remaining_seconds=$((remaining_seconds % 60))
+	echo "Worked: $hours hours $minutes minutes $seconds seconds"
+	echo "Remaining: $remaining_hours hours $remaining_minutes minutes $remaining_seconds seconds"
+}
+
+append_to_file() {
+	date_time=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$date_time - Worked: $hours hours $minutes minutes $seconds seconds"
+	echo "$date_time - Worked: $hours hours $minutes minutes $seconds seconds" >>"$work_log_dir/work_hours.log"
+}
+
+# Main script
+if [[ $1 == "start" ]]; then
+	work_start
+elif [[ $1 == "end" ]]; then
+	work_end
+elif [[ $1 == "info" ]]; then
+	info
+else
+	echo "Usage: $0 {start|end|info}"
+fi

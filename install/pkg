@@ -1,16 +1,13 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 sudo apt update --fix-missing
 
-# Exa
-wget -c http://old-releases.ubuntu.com/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_amd64.deb
-sudo apt-get install ./exa_0.9.0-4_amd64.deb -y
-rm ./exa_0.9.0-4_amd64.deb
-
 #tmux
-sudo apt install tmux -y
-
-# g++
-sudo apt-get install g++ -y
+sudo apt install \
+	tmux \
+	g++ \
+	neofetch \
+	xclip \
+	-y
 
 sudo apt upgrade -y
