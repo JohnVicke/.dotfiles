@@ -3,8 +3,8 @@
 echo "Installing ZSH with OH-MY-ZSH..."
 sudo apt install zsh -y
 
-echo "Installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#echo "Installing oh-my-zsh"
+#sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 PLUGIN_PATH=$HOME/.oh-my-zsh/custom/plugins
 
