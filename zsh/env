@@ -44,4 +44,3 @@ lg() {
     fi
 }
 
-bindkey -s ^f "tmux-sessionizer\n"

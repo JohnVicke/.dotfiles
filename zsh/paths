@@ -3,6 +3,7 @@
 addToPath /opt/nvim-linux64/bin
 addToPathFront $BUN_INSTALL/bin
 addToPathFront $HOME/.local/share/fnm
+addToPathFront $HOME/.local/bin
 
 addToPath /usr/local/go/bin
 addToPath $HOME/.local/scripts
