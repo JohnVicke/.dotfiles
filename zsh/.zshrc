@@ -42,9 +42,7 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
 # bun completions
-[ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
 
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
@@ -71,6 +69,6 @@ eval "$(pyenv init -)"
 eval "$(~/.rbenv/bin/rbenv init - zsh)"
 
 zvm_after_init_commands+=('source_if_exists $DOTFILES/zsh/after-vi-init')
-
+[ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
