@@ -72,3 +72,5 @@ zvm_after_init_commands+=('source_if_exists $DOTFILES/zsh/after-vi-init')
 [ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+eval $(thefuck --alias)
