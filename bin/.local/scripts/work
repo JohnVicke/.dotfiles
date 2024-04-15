@@ -29,7 +29,7 @@ calculate_work_time() {
 info() {
 	calculate_work_time
 	total_seconds=$((hours * 3600 + minutes * 60 + seconds))
-	remaining_seconds=$((8 * 3600 - total_seconds))
+	remaining_seconds=$((7 * 3600 - total_seconds))
 	remaining_hours=$((remaining_seconds / 3600))
 	remaining_minutes=$(((remaining_seconds % 3600) / 60))
 	remaining_seconds=$((remaining_seconds % 60))
