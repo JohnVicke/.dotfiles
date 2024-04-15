@@ -1,3 +1,17 @@
+return {
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    priority = 1000,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin-frappe",
+    },
+  },
+}
+
 -- return {
 --   {
 --     "craftzdog/solarized-osaka.nvim",
@@ -14,5 +28,5 @@
 --     opts = {
 --       colorscheme = "solarized-osaka",
 --     },
---   }
+--   },
 -- }
