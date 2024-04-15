@@ -1,14 +1,50 @@
 return {
-  "ThePrimeagen/harpoon",
-  lazy = false,
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-  },
-  config = true,
-  keys = {
-    { "<leader>ha", "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = "Mark file with harpoon" },
-    { "<leader>hn", "<cmd>lua require('harpoon.ui').nav_next()<cr>", desc = "Go to next harpoon mark" },
-    { "<leader>hp", "<cmd>lua require('harpoon.ui').nav_prev()<cr>", desc = "Go to previous harpoon mark" },
-    { "<leader>ho", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Show harpoon marks" },
+  -- Harpoon plugin configuration
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    lazy = false,
+    requires = { "nvim-lua/plenary.nvim" }, -- if harpoon requires this
+    config = function()
+      require("harpoon").setup({})
+    end,
+    keys = {
+      {
+        "<leader>ha",
+        function()
+          require("harpoon"):list():add()
+        end,
+        desc = "harpoon file",
+      },
+      {
+        "<leader>ho",
+        function()
+          local harpoon = require("harpoon")
+          harpoon.ui:toggle_quick_menu(harpoon:list())
+        end,
+        desc = "harpoon quick menu",
+      },
+      {
+        "<leader>1",
+        function()
+          require("harpoon"):list():select(1)
+        end,
+        desc = "harpoon to file 1",
+      },
+      {
+        "<leader>2",
+        function()
+          require("harpoon"):list():select(2)
+        end,
+        desc = "harpoon to file 2",
+      },
+      {
+        "<leader>3",
+        function()
+          require("harpoon"):list():select(3)
+        end,
+        desc = "harpoon to file 3",
+      },
+    },
   },
 }
