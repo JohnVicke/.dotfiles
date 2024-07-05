@@ -36,5 +36,13 @@ return {
         end
       end, { "i", "s" }),
     })
+
+    cmp.setup.filetype({ "sql" }, {
+      sources = {
+        { name = "vim-dadbod-completion" },
+        { name = "buffer" },
+        { name = "copilot" },
+      },
+    })
   end,
 }

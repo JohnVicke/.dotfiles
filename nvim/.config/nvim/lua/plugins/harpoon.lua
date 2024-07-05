@@ -6,7 +6,11 @@ return {
     lazy = false,
     requires = { "nvim-lua/plenary.nvim" }, -- if harpoon requires this
     config = function()
-      require("harpoon").setup({})
+      require("harpoon").setup({
+        settings = {
+          save_on_toggle = true,
+        },
+      })
     end,
     keys = {
       {

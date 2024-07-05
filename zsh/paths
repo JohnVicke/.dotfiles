@@ -7,7 +7,7 @@ addToPathFront $HOME/.local/bin
 
 addToPath /usr/local/go/bin
 addToPath $HOME/.local/scripts
-addToPath $GOPATH/bin
+addToPath $HOME/go/bin
 addToPath $HOME/.yarn/bin
 addToPath $HOME/.cargo/bin
 addToPath $HOME/.rustup

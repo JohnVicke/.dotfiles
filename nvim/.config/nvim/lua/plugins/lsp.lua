@@ -41,7 +41,7 @@ return {
             desc = "Organize imports",
           },
           {
-            "<leader>cR",
+            "<leader>cu",
             function()
               vim.lsp.buf.code_action({
                 apply = true,

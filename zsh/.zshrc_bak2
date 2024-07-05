@@ -1,0 +1,117 @@
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+if [[ ! -d $ZINIT_HOME ]]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+source "$ZINIT_HOME/zinit.zsh"
+
+source_if_exists () {
+    if test -r "$1"; then
+        source "$1"
+    fi
+}
+
+export DOTFILES=$HOME/.dotfiles
+
+source_if_exists $DOTFILES/zsh/env
+source_if_exists $DOTFILES/zsh/paths
+source_if_exists $DOTFILES/zsh/alias
+
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::kubectl
+
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
+
+zinit load agkozak/zsh-z
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+
+autoload -Uz compinit
+
+# Skip recompiling if no changes are detected
+if [[ ! -f ~/.zcompdump || ~/.zcompdump -ot ~/.zshrc ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+zinit cdreplay -q
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+fpath=($fpath "$HOME/.zfunctions")
+
+autoload -U promptinit; promptinit
+
+if [[ $TERM == xterm* ]]; then
+  TERM=xterm-256color;
+fi
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(starship init zsh)"
+eval "$(fnm env --use-on-cd)"
+eval "$(fzf --zsh)"
+
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
+
+# fnm
+export PATH="/home/viktor/.local/share/fnm:$PATH"
+eval "`fnm env`"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(~/.rbenv/bin/rbenv init - zsh)"
+
+zvm_after_init_commands+=('source_if_exists $DOTFILES/zsh/after-vi-init')
+[ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+eval $(thefuck --alias)
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

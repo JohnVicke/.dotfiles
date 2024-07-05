@@ -4,7 +4,7 @@ import = ["~/.dotfiles/alacritty/catppuccin/catppuccin-frappe.toml"]
 TERM = "xterm-256color"
 
 [font]
-size = 11.0
+size = 10.0
 
 [font.bold]
 family = "MonaspiceAr Nerd Font"
@@ -27,4 +27,4 @@ x = 0
 y = 0
 
 [window]
-opacity = 0.9
+opacity = 0.98
