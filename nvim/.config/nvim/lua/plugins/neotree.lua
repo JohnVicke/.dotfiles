@@ -1,14 +1,23 @@
 return {
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      close_if_last_window = true,
-      window = {
-        position = "float",
-      },
+  "kyazdani42/nvim-tree.lua",
+  dependencies = {
+    "kyazdani42/nvim-web-devicons",
+  },
+  lazy = false,
+  keys = {
+    { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Find file in filetree" },
+  },
+  opts = {
+    filters = {
+      custom = { ".git", "node_modules", ".vscode" },
+      dotfiles = true,
     },
-    keys = {
-      { "<leader>neotree", "<Cmd>Neotree reveal toggle<CR>", desc = "Toggle NeoTree" },
+    git = {},
+    view = {
+      adaptive_size = true,
+      float = {
+        enable = true,
+      },
     },
   },
 }
