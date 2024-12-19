@@ -1,6 +1,7 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
+    inlayHints = false,
     servers = {
       tsserver = {
         settings = {
@@ -8,20 +9,9 @@ return {
             inlayHints = {
               includeInlayParameterNameHints = "literal",
               includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
+              includeInlayFunctionParameterTypeHints = false,
               includeInlayVariableTypeHints = false,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-          javascript = {
-            inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = false,
               includeInlayFunctionLikeReturnTypeHints = true,
               includeInlayEnumMemberValueHints = true,
             },

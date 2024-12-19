@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+if ! command -v fzf &>/dev/null; then
+  echo "fzf is not installed. Please install it first."
+  exit 1
+fi
+
+echo "Select the .tar.gz file to verify:"
+
+FILE=$(fzf --prompt="File: " --preview="tar -tzf {}" --preview-window=up:10:wrap --height=30%)
+
+if [[ -z $FILE ]]; then
+  echo "No file selected."
+  exit 1
+fi
+
+echo "Enter the expected checksum (e.g., SHA256):"
+read -r EXPECTED_CHECKSUM
+
+if [[ -z "$EXPECTED_CHECKSUM" ]]; then
+  echo "Error: Checksum cannot be empty."
+  exit 1
+fi
+
+echo "Enter the checksum type (e.g., sha256sum, sha512sum, md5sum):"
+read -r CHECKSUM_TYPE
+
+if ! command -v "$CHECKSUM_TYPE" &>/dev/null; then
+  echo "$CHECKSUM_TYPE is not installed. Please install it first."
+  exit 1
+fi
+
+echo "Computing checksum for $FILE using $CHECKSUM_TYPE..."
+COMPUTED_CHECKSUM=$($CHECKSUM_TYPE "$FILE" | awk '{print $1}')
+
+if [[ "$COMPUTED_CHECKSUM" == "$EXPECTED_CHECKSUM" ]]; then
+  echo "Checksum verified successfully."
+
+  echo "Extracting $FILE..."
+  tar -xvzf "$FILE"
+
+  if [[ $? -eq 0 ]]; then
+    echo "Extraction successful."
+  else
+    echo "Error during extraction."
+    exit 1
+  fi
+else
+  echo "Checksum verification failed!"
+  echo "Expected: $EXPECTED_CHECKSUM"
+  echo "Computed: $COMPUTED_CHECKSUM"
+  exit 1
+fi

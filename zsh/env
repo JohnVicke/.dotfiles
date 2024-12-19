@@ -8,6 +8,8 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 export TERM=xterm-256color
 export ANDROID_HOME=$HOME/Android/Sdk
 export XDG_CONFIG_HOME="$HOME/.config/"
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
 
 startMongo() {
     sudo systemctl start mongod
