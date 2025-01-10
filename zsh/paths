@@ -16,3 +16,4 @@ addToPath $ANDROID_HOME/emulator
 addToPath $ANDROID_HOME/tools
 addToPath $ANDROID_HOME/tools/bin
 addToPath $ANDROID_HOME/platform-tools
+addToPath $HOME/Downloads/zig

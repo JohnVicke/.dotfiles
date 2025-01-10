@@ -78,3 +78,13 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # add Pulumi to the PATH
 export PATH=$PATH:/home/viktor/.pulumi/bin
+
+if [ -e /home/viktor/.nix-profile/etc/profile.d/nix.sh ]; then . /home/viktor/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# pnpm
+export PNPM_HOME="/home/viktor/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

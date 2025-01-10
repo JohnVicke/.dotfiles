@@ -1,32 +1,53 @@
 #!/usr/bin/env bash
 
-if [ $# -eq 0 ]; then
-	echo "Usage: $0 <project_name1> [<project_name2> ...]"
-	exit 1
+COMPOSE_DIR="$HOME/dev/anyfin/environments"
+
+if [ ! -d "$COMPOSE_DIR" ]; then
+  echo "Docker Compose directory not found: $COMPOSE_DIR"
+  exit 1
 fi
 
-for PROJECT_NAME in "$@"; do
-	VALID_PROJECT=false
-	PROJECT_DIR=""
+cd "$COMPOSE_DIR" || exit 1
 
-	for DIR in "$HOME/dev/anyfin/"*; do
-		DIR_FIRST_WORD=$(basename "$DIR" | cut -d'-' -f1)
+if [ ! -f "compose.yml" ]; then
+  echo "No docker-compose.yml found in $COMPOSE_DIR"
+  exit 1
+fi
 
-		if [ "$PROJECT_NAME" = "$DIR_FIRST_WORD" ]; then
-			VALID_PROJECT=true
-			PROJECT_DIR="$DIR"
-			break
-		fi
-	done
+services=$(docker compose config --services)
 
-	# If not a valid project, skip to the next one
-	if [ "$VALID_PROJECT" != true ]; then
-		echo "Invalid project name: $PROJECT_NAME"
-		continue
-	fi
+# Get currently running containers from this compose project
+running_containers=$(docker compose ps --services)
 
-	tmux new-window -c "$HOME/dev/anyfin/environments/" -n "$PROJECT_NAME"
-	tmux send-keys -t "$PROJECT_NAME" "docker compose up $PROJECT_NAME" Enter
+# Create list of stopped services only
+formatted_list=""
+while IFS= read -r service; do
+  if ! echo "$running_containers" | grep -q "^${service}$"; then
+    formatted_list="${formatted_list}${service}\n"
+  fi
+done <<<"$services"
 
-	tmux select-window -t 1
-done
+# Create preview function for fzf
+preview_cmd='
+    echo "=== Currently Running ==="
+    echo "'"$(docker compose ps --services)"'"
+    echo
+    echo "=== Selected to Start ==="
+    echo {+}
+'
+
+# Use fzf with split preview showing running and selected services
+selected=$(echo -e "$formatted_list" | fzf -m \
+  --header="Tab to select, Enter to confirm" \
+  --preview "$preview_cmd" \
+  --preview-window=right:40%:wrap \
+  --bind="tab:toggle+refresh-preview" \
+  --bind="enter:accept" \
+  --bind="esc:cancel")
+
+# Exit if nothing was selected
+[ -z "$selected" ] && exit 0
+
+# Start the selected services
+echo "Starting selected services..."
+echo "$selected" | xargs docker compose up -d
