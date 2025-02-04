@@ -3,8 +3,8 @@
 alias t="tmux"
 alias pn="pnpm"
 
-alias pbcopy="xclip -sel clip"
-alias pbpaste="xclip -sel clip -o"
+alias pbcopy="wl-copy"
+alias pbpaste="wl-paste"
 
 alias ^L=clear
 

@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 
-COMPOSE_DIR="$HOME/dev/anyfin/environments"
+COMPOSE_DIR="${COMPOSE_DIR:-$HOME/dev/anyfin/environments}"
+
+for cmd in docker fzf; do
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "Error: Required command '$cmd' is not installed." >&2
+    exit 1
+  fi
+done
 
 if [ ! -d "$COMPOSE_DIR" ]; then
-  echo "Docker Compose directory not found: $COMPOSE_DIR"
+  echo "Error: Docker Compose directory not found: $COMPOSE_DIR"
+  echo "Please ensure the path is correct or set the COMPOSE_DIR environment variable."
   exit 1
 fi
 
 cd "$COMPOSE_DIR" || exit 1
-
 if [ ! -f "compose.yml" ]; then
   echo "No docker-compose.yml found in $COMPOSE_DIR"
   exit 1
@@ -16,38 +23,35 @@ fi
 
 services=$(docker compose config --services)
 
-# Get currently running containers from this compose project
 running_containers=$(docker compose ps --services)
 
-# Create list of stopped services only
 formatted_list=""
 while IFS= read -r service; do
   if ! echo "$running_containers" | grep -q "^${service}$"; then
-    formatted_list="${formatted_list}${service}\n"
+    formatted_list=$(comm -23 \
+      <(echo "$services" | sort) \
+      <(echo "$running_containers" | sort))
   fi
 done <<<"$services"
 
-# Create preview function for fzf
 preview_cmd='
-    echo "=== Currently Running ==="
-    echo "'"$(docker compose ps --services)"'"
+    echo "=== Currently Running Services ==="
+    docker compose ps --services | sed "s/^/  - /"
     echo
-    echo "=== Selected to Start ==="
-    echo {+}
+    echo "=== Services Selected to Start ==="
+    echo {+} | sed "s/^/  - /"
 '
+selected=$(
+  echo -e "$formatted_list" | fzf -m \
+    --header="Use Tab to select multiple services, Enter to confirm, Esc to cancel" \
+    --preview "$preview_cmd" \
+    --preview-window=right:40%:wrap \
+    --bind="tab:toggle+clear-query+refresh-preview" \
+    --bind="enter:accept" \
+    --bind="esc:cancel"
+)
 
-# Use fzf with split preview showing running and selected services
-selected=$(echo -e "$formatted_list" | fzf -m \
-  --header="Tab to select, Enter to confirm" \
-  --preview "$preview_cmd" \
-  --preview-window=right:40%:wrap \
-  --bind="tab:toggle+refresh-preview" \
-  --bind="enter:accept" \
-  --bind="esc:cancel")
-
-# Exit if nothing was selected
 [ -z "$selected" ] && exit 0
 
-# Start the selected services
 echo "Starting selected services..."
 echo "$selected" | xargs docker compose up -d

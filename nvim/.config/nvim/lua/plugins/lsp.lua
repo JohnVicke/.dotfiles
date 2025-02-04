@@ -4,19 +4,7 @@ return {
     inlayHints = false,
     servers = {
       tsserver = {
-        settings = {
-          typescript = {
-            inlayHints = {
-              includeInlayParameterNameHints = "literal",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = false,
-              includeInlayVariableTypeHints = false,
-              includeInlayPropertyDeclarationTypeHints = false,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-        },
+        inlayHints = false,
         keys = {
           {
             "<leader>oi",
