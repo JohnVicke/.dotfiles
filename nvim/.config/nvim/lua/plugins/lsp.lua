@@ -1,10 +1,9 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
-    inlayHints = false,
+    inlay_hints = { enabled = false },
     servers = {
       tsserver = {
-        inlayHints = false,
         keys = {
           {
             "<leader>oi",

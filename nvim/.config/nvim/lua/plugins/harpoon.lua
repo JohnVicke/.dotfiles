@@ -14,7 +14,7 @@ return {
     end,
     keys = {
       {
-        "<leader>ha",
+        "<leader>a",
         function()
           require("harpoon"):list():add()
         end,
@@ -29,25 +29,46 @@ return {
         desc = "harpoon quick menu",
       },
       {
-        "<leader>1",
+        "<C-h>",
         function()
           require("harpoon"):list():select(1)
         end,
         desc = "harpoon to file 1",
       },
       {
-        "<leader>2",
+        "<C-j>",
         function()
           require("harpoon"):list():select(2)
         end,
         desc = "harpoon to file 2",
       },
       {
-        "<leader>3",
+        "<C-k>",
         function()
           require("harpoon"):list():select(3)
         end,
         desc = "harpoon to file 3",
+      },
+      {
+        "<C-l>",
+        function()
+          require("harpoon"):list():select(4)
+        end,
+        desc = "harpoon to file 4",
+      },
+      {
+        "<C-S-p>",
+        function()
+          require("harpoon"):list():next()
+        end,
+        desc = "harpoon next",
+      },
+      {
+        "<C-S-n>",
+        function()
+          require("harpoon"):list():prev()
+        end,
+        desc = "harpoon prev",
       },
     },
   },
