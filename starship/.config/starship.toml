@@ -50,7 +50,7 @@ format = '\[[$symbol($version)]($style)\]'
 
 
 [gcloud]
-format = '\[[$symbol$account @ \($project\)]($style)\]'
+format = '\[[$symbol$project]($style)\]'
 symbol = ' '
 
 [golang]

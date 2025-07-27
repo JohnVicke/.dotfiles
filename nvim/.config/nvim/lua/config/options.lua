@@ -38,3 +38,4 @@ vim.opt.guicursor = ""
 
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
+vim.g.nvim_tree_respect_buf_cwd = 1

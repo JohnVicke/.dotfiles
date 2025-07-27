@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+setup_node_version() {
+  local dockerfile="$1"
+  
+  if [ ! -f "$dockerfile" ]; then
+    echo "Error: Dockerfile not found at $dockerfile"
+    return 1
+  fi
+
+  node_version=$(grep -E "FROM node:[0-9]+" "$dockerfile" | grep -oE "[0-9]+" | head -1)
+  
+  if [ -z "$node_version" ]; then
+    echo "Error: Could not find Node version in $dockerfile"
+    return 1
+  fi
+  
+  echo "$node_version" > .nvmrc
+  echo "Created .nvmrc with Node version $node_version"
+  
+  if [ -d ".git" ]; then
+    mkdir -p .git/info
+    touch .git/info/exclude
+    
+    if ! grep -q "^\.nvmrc$" .git/info/exclude; then
+      echo ".nvmrc" >> .git/info/exclude
+      echo "Added .nvmrc to .git/info/exclude"
+    else
+      echo ".nvmrc already in .git/info/exclude"
+    fi
+  else
+    echo "Warning: This doesn't appear to be a git repository"
+  fi
+}
+
+if [ -f "Dockerfile" ]; then
+  setup_node_version "Dockerfile"
+else
+  echo "No Dockerfile found in current directory"
+fi

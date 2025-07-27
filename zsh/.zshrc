@@ -26,8 +26,6 @@ else
   export EDITOR='nvim'
 fi
 
-
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -55,18 +53,17 @@ esac
 
 ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
 
-# fnm
-export PATH="/home/viktor/.local/share/fnm:$PATH"
 eval "`fnm env`"
 
 export NVM_DIR="$HOME/.nvm"
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+[[ -d $PYENV_ROOT/bin ]] && addToPath $PYENV_ROOT/bin
 eval "$(pyenv init -)"
-# eval "$(~/.rbenv/bin/rbenv init - zsh)"
+eval "$(~/.rbenv/bin/rbenv init - zsh)"
 
 zvm_after_init_commands+=('source_if_exists $DOTFILES/zsh/after-vi-init')
 [ -s "/home/viktor/.bun/_bun" ] && source "/home/viktor/.bun/_bun"
@@ -88,3 +85,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# opencode
+export PATH=/home/viktor/.opencode/bin:$PATH

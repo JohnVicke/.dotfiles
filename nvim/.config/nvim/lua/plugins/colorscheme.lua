@@ -1,16 +1,16 @@
--- return {
---   {
---     "catppuccin/nvim",
---     lazy = true,
---     priority = 1000,
---   },
---   {
---     "LazyVim/LazyVim",
---     opts = {
---       colorscheme = "catppuccin-mocha",
---     },
---   },
--- }
+return {
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    priority = 1000,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin-frappe",
+    },
+  },
+}
 
 -- return {
 --   {
@@ -30,10 +30,10 @@
 --     },
 --   },
 -- }
-return {
-  "rose-pine/neovim",
-  name = "rose-pine",
-  config = function()
-    vim.cmd("colorscheme rose-pine")
-  end,
-}
+-- return {
+--   "rose-pine/neovim",
+--   name = "rose-pine",
+--   config = function()
+--     vim.cmd("colorscheme rose-pine")
+--   end,
+-- }

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-addToPath /opt/nvim-linux64/bin
-addToPathFront $BUN_INSTALL/bin
+addToPathFront /usr/local/go/bin
 addToPathFront $HOME/.local/share/fnm
 addToPathFront $HOME/.local/bin
 
-addToPath /usr/local/go/bin
+addToPath /opt/nvim-linux-x86_64/bin
+addToPath $BUN_INSTALL/bin
 addToPath $HOME/.local/scripts
 addToPath $HOME/go/bin
 addToPath $HOME/.yarn/bin
@@ -17,3 +17,4 @@ addToPath $ANDROID_HOME/tools
 addToPath $ANDROID_HOME/tools/bin
 addToPath $ANDROID_HOME/platform-tools
 addToPath $HOME/Downloads/zig
+addToPath $HOME/.rover/bin

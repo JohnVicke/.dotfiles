@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cat /proc/acpi/button/lid/LID0/state | awk '{print }' | grep -q 'closed' && swaymsg output eDP-1 disable
+cat /proc/acpi/button/lid/LID/state | awk '{print }' | grep -q 'closed' && swaymsg output eDP-1 disable
