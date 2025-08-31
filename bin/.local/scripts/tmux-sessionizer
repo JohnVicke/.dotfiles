@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 
-crimp=(~/dev/personal/crimp)
 personal=(~/dev/personal)
 anyfin=(~/dev/anyfin)
-dev=(~/dev)
 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find $anyfin $personal $dev $crimp -mindepth 1 -maxdepth 1 -type d | fzf --delimiter / --with-nth -2,-1)
+  selected=$(find $anyfin $personal -mindepth 1 -maxdepth 1 -type d | fzf --delimiter / --with-nth -2,-1)
 fi
 
 if [[ -z $selected ]]; then
