@@ -80,7 +80,70 @@ local function run_docker_in_floating_term()
   })
 end
 
+local function run_npm_script()
+  local package_json_path = vim.fn.findfile("package.json", vim.fn.getcwd() .. ";")
+  if not package_json_path or package_json_path == "" then
+    vim.notify("No package.json found in the current directory or its parents.", vim.log.levels.WARN)
+    return
+  end
+
+  local file = io.open(package_json_path, "r")
+  if not file then
+    vim.notify("Failed to open package.json.", vim.log.levels.ERROR)
+    return
+  end
+  local content = file:read("*a")
+  file:close()
+
+  local ok, json = pcall(vim.fn.json_decode, content)
+  if not ok or not json or not json.scripts or vim.tbl_isempty(json.scripts) then
+    vim.notify("No scripts found in package.json.", vim.log.levels.WARN)
+    return
+  end
+
+  local scripts = {}
+  table.insert(scripts, "install")
+  for script_name, _ in pairs(json.scripts) do
+    table.insert(scripts, script_name)
+  end
+  table.sort(scripts)
+
+  require("fzf-lua").fzf_exec(scripts, {
+    prompt = "Select npm script> ",
+    actions = {
+      ["default"] = function(selected)
+        if selected and #selected > 0 then
+          local script_name = selected[1]
+
+          local run = script_name == "install" and "" or "run"
+
+          if not vim.api.nvim_win_is_valid(state.floating.win) then
+            state.floating = create_floating_window()
+          end
+
+          if vim.bo[state.floating.buf].buftype ~= "terminal" then
+            local cmd = string.format("pnpm %s %s", run, vim.fn.shellescape(script_name))
+            vim.fn.termopen(cmd)
+          else
+            -- If a terminal is already open, send the command to it
+            local chan = vim.api.nvim_buf_get_var(state.floating.buf, "terminal_job_id")
+            if chan and vim.api.nvim_get_chan_info(chan) then
+              local cmd = string.format("pnpm %s %s\n", run, vim.fn.shellescape(script_name))
+              vim.api.nvim_chan_send(chan, cmd)
+            else
+              vim.notify("Floating terminal is not running a shell.", vim.log.levels.ERROR)
+            end
+          end
+        end
+      end,
+    },
+  })
+end
+
+vim.api.nvim_create_user_command("NpmRun", run_npm_script, {})
 vim.api.nvim_create_user_command("FloatTerminal", toggle_terminal, {})
 vim.api.nvim_create_user_command("DockerExec", run_docker_in_floating_term, {})
+
+vim.keymap.set({ "n", "t" }, "<leader>tn", run_npm_script)
 vim.keymap.set({ "n", "t" }, "<leader>tt", toggle_terminal)
 vim.keymap.set({ "n", "t" }, "<leader>td", run_docker_in_floating_term)

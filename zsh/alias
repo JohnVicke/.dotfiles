@@ -26,4 +26,6 @@ alias l='exa --color=always --group-directories-first'
 alias la='exa --header --long'
 alias ll='exa -1 --color=always --group-directories-first'
 alias ls='exa -a1 --color=always --group-directories-first'
-alias bat="batcat"
+alias find='fd'
+alias cat='bat'
+alias grep='rg'

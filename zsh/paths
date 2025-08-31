@@ -18,3 +18,6 @@ addToPath $ANDROID_HOME/tools/bin
 addToPath $ANDROID_HOME/platform-tools
 addToPath $HOME/Downloads/zig
 addToPath $HOME/.rover/bin
+addToPath $HOME/.pulumi/bin
+addToPath $HOME/.local/share/pnpm
+addToPath $HOME/.opencode/bin

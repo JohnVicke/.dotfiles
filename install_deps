@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-for file in ./install/*; do
-	$file
-done

@@ -2,5 +2,4 @@ wm.gaps.inner.size: 10
 wm.bar.position: top
 wm.gaps.focus_follows_mouse: yes
 wm.bindsym.1: Ctrl+d
-/*regolith.wallpaper.file: /usr/share/backrounds/levi.jpg*/
 

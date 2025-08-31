@@ -1,118 +1,110 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-# Switch between git worktrees with speed.
+# Colors for previews
+YELLOW=$(tput setaf 3)
+RESET=$(tput sgr0)
 
-args=("$@")
-VERSION="0.1.0"
-TMP_PATH=$(mktemp)
-BINARY_PATH=$(which wt)
-JQ_URL="https://stedolan.github.io/jq/download"
-RELEASE_URL="https://github.com/yankeexe/git-worktree-switcher/releases/latest"
-RELEASE_API_URL="https://api.github.com/repos/yankeexe/git-worktree-switcher/releases/latest"
-
-
-# Escape forward slash
-arg=$(echo "${args[0]}" | sed 's/\//\\\//g')
-
-# show worktree list
-worktree_list() {
-	git worktree list
+# Get list of worktree paths
+git_worktree_list() {
+  git worktree list --porcelain |
+    awk '/worktree/ {print $2}'
 }
 
-help_message() {
-	echo -e "wt lets you switch between your git worktrees with speed.\n"
-	echo "Usage:"
-	echo -e "\twt <worktree-name>: search for worktree names and change to that directory."
-	echo -e "\twt list: list out all the git worktrees."
-	echo -e "\twt update: update to the latest release of worktree switcher."
-	echo -e "\twt version: show the CLI version."
-	echo -e "\twt help: shows this help message."
+# List worktrees with branch + commit
+git_worktree_table() {
+  git worktree list --porcelain |
+    awk '
+      BEGIN {printf "%-40s %-20s %s\n", "Worktree", "Branch", "Commit"}
+      /worktree/ {wt=$2}
+      /branch/ {sub("refs/heads/","",$2); br=$2}
+      /HEAD/ {printf "%-40s %-20s %s\n", wt, br, $2}
+    '
 }
 
-goto_main_worktree() {
-	main_worktree=$(git worktree list --porcelain | awk '{print $0; exit}' | grep -oP '(?<=worktree ).*')
-
-	if [ -z "$main_worktree" ]; then
-		:
-	else
-		echo Changing to main worktree at: "$main_worktree"
-		cd "$main_worktree"
-		exec $SHELL
-	fi
+# fzf preview: show git log for branch in worktree
+preview_log() {
+  local dir="$1"
+  if [[ -d "$dir/.git" || -f "$dir/.git" ]]; then
+    (cd "$dir" && git log --oneline --graph --decorate --color=always -n 15)
+  else
+    echo "Not a valid worktree"
+  fi
 }
 
-download_latest_update() {
-	download_url=$(curl -sL $RELEASE_API_URL | jq -r '.assets[0].browser_download_url')
-
-	echo "Downloading latest version $fetched_tag_name"
-	curl -sL -o "$TMP_PATH" "$download_url"
-
-	echo "Updating to latest version..."
-	chmod +x "$TMP_PATH"
-	sudo mv "$TMP_PATH" "$BINARY_PATH"
-	rm -f "$TMP_PATH"
-
-	echo "You are using the latest version of worktree switcher: $fetched_tag_name"
+# Create a worktree
+cmd_create() {
+  read -rp "Branch name (will create if missing): " branch
+  read -rp "Directory for worktree: " newdir
+  if ! git show-ref --verify --quiet "refs/heads/$branch"; then
+    git branch "$branch"
+  fi
+  git worktree add "$newdir" "$branch"
 }
 
-check_release_version() {
-	fetched_tag_name=$(curl -sL $RELEASE_API_URL | jq -r '.tag_name')
-
-	if [ "$fetched_tag_name" == $VERSION ]; then
-		echo "You have the latest version of worktree switcher!"
-		echo "Version: $VERSION"
-	else
-		download_latest_update
-	fi
+# Remove a worktree
+cmd_remove() {
+  local dir
+  dir=$(git_worktree_list | fzf --prompt="Remove worktree> " \
+    --preview 'preview_log {}') || return
+  [[ "$dir" == "$(pwd)" ]] && {
+    echo "Can't remove the current worktree"
+    return 1
+  }
+  git worktree remove "$dir"
 }
 
-update() {
-	if [ -z "$(command -v jq)" ]; then
-		echo "jq is required for updating worktree switcher via this command."
-		echo -e "Install jq:\n$JQ_URL.\n"
-		echo -e "Or visit:\n$RELEASE_URL"
-	else
-		check_release_version
-	fi
+# Switch to a worktree
+cmd_switch() {
+  local dir
+  dir=$(git_worktree_list | fzf --prompt="Switch to worktree> " \
+    --preview 'preview_log {}') || return
+  cd "$dir" || return
+  exec $SHELL
 }
 
-if [ -z "${args[0]}" ]; then
-	help_message
-	exit 0
-fi
-
-case "${args[0]}" in
-list)
-	worktree_list
-	;;
-update)
-	update
-	;;
-help)
-	help_message
-	;;
-version)
-	echo Version: $VERSION
-	;;
--)
-	goto_main_worktree
-	;;
-*)
-	directory=$(git worktree list --porcelain | awk '/'"$arg"'/ {print; exit}' | grep -oP '(?<=worktree ).*')
-	;;
-esac
-
-# Change worktree based on user argument.
-change_worktree() {
-	echo Changing to worktree at: "$directory"
-	cd "$directory"
-	exec $SHELL
+# Visualize all worktrees
+cmd_list() {
+  git_worktree_table | fzf --prompt="Worktrees> " \
+    --preview 'preview_log $(echo {} | awk "{print \$1}")'
 }
 
-# If directory variable is not empty then change worktree
-if [ -z "$directory" ]; then
-	:
-else
-	change_worktree
-fi
+# Main interactive menu
+cmd_menu() {
+  local choice
+  choice=$(
+    printf "list\nswitch\ncreate\nremove" |
+      fzf --prompt="wt> " \
+        --header="${YELLOW}Git Worktree Manager${RESET}" \
+        --preview 'case {} in
+            list) git worktree list --porcelain ;;
+            switch) echo "Switch to a worktree" ;;
+            create) echo "Create a new worktree" ;;
+            remove) echo "Remove a worktree" ;;
+        esac'
+  ) || return
+
+  case "$choice" in
+  list) cmd_list ;;
+  switch) cmd_switch ;;
+  create) cmd_create ;;
+  remove) cmd_remove ;;
+  esac
+}
+
+# Entry point
+main() {
+  if [[ $# -eq 0 ]]; then
+    cmd_menu
+  else
+    case "$1" in
+    list) cmd_list ;;
+    switch) cmd_switch ;;
+    create) cmd_create ;;
+    remove) cmd_remove ;;
+    *) echo "Unknown command: $1" ;;
+    esac
+  fi
+}
+
+main "$@"
