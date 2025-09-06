@@ -43,6 +43,7 @@ fi
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
 eval "$(fzf --zsh)"
+eval "$(direnv hook zsh)"
 
 ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
 

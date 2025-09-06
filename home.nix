@@ -16,35 +16,100 @@
     bat
     fzf
     unzip
+    docker
   ];
 
   programs = {
-    home-manager = {enable = true; };
-    kitty = {
+    lazygit = { enable = true; };
+    ghostty = {
       enable = true;
-      font = {
-        name = "MonaspiceAr Nerd Font";
+      enableZshIntegration = true;
+      settings = { 
+        font-family = "MonaspiceAr Nerd Font";
+        theme = "rose-pine";
       };
-      settings = {
-        allow_remote_control = "socket-only";
-        listen_on = "unix:/tmp/mykitty";
-        kitty_mod = "ctrl+shift";
-        shell_integration = "enabled";
-        action_alias =
-          "kitty_scrollback_nvim kitten ${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py";
-        font_size = "8.0";
-      };
-      keybindings = {
-        # Browse scrollback buffer in nvim
-        "ctrl+f" = "kitty_scrollback_nvim --nvim-args -n";
-        # Browse output of the last shell command in nvim
-        "kitty_mod+g" =
-          "kitty_scrollback_nvim --config ksb_builtin_last_cmd_output";
-      };
-      themeFile = "kanagawa";
+      package = pkgs.writeShellScriptBin "ghostty" ''
+        exec ${pkgs.nixGL.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+        '';
     };
+    home-manager = {enable = true; };
     neovim = { enable = true; };
-    tmux = { enable = true; };
+    tmux = { 
+      sensibleOnTop = false;
+      baseIndex = 0;
+      enable = true; 
+      plugins = with pkgs; [
+      {
+        plugin = tmuxPlugins.rose-pine;
+        extraConfig = '' 
+          set -g @rose_pine_variant 'main' 
+          set -g @rose_pine_bar_bg_disable 'on'
+          '';
+      }
+      ];
+      extraConfig = ''
+        set -g default-terminal "xterm-256color"
+        set-option -ga terminal-overrides ",xterm-256color:RGB"
+
+        set -s escape-time 0
+
+        unbind c-b
+        set-option -g prefix c-t
+        bind-key c-t send-prefix
+
+        set -g base-index 1
+
+        bind | split-window -h
+        bind - split-window -v
+        unbind '"'
+        unbind %
+
+        bind r source-file ~/.config/tmux/tmux.conf \; display-message "config reloaded";
+      set -g mouse on
+
+        set-window-option -g mode-keys vi;
+
+      bind V copy-mode;
+
+      bind -T copy-mode-vi V send-keys -X cancel
+
+        unbind -T copy-mode-vi v
+
+        bind -T copy-mode-vi v \
+        send-keys -X begin-selection
+
+        bind -T copy-mode-vi 'C-v' \
+        send-keys -X rectangle-toggle
+
+        bind -T copy-mode-vi y \
+        send-keys -X copy-pipe-and-cancel "pbcopy"
+
+        bind -T copy-mode-vi MouseDragEnd1Pane \
+        send-keys -X copy-pipe-and-cancel "pbcopy"
+
+        set-option -g status-position top 
+
+        bind -r h select-pane -L
+        bind -r j select-pane -D
+        bind -r k select-pane -U
+        bind -r l select-pane -R
+
+        bind -n M-h resize-pane -L 5
+        bind -n M-j resize-pane -D 5
+        bind -n M-k resize-pane -U 5
+        bind -n M-l resize-pane -R 5
+
+        bind-key 'w' choose-tree -Zs
+        bind-key -r a run-shell "tmux-sessionizer ~/dev/anyfin/deposits-service"
+        bind-key -r s run-shell "tmux-sessionizer ~/.dotfiles"
+        bind-key -r f run-shell "tmux neww tmux-sessionizer"
+        bind-key -r u run-shell "up"
+        bind-key -r g new-window -c '#{pane_current_path}'  -n '' lazygit
+        bind-key -r v new-window -c '#{pane_current_path}'  -n '' lazydocker
+        bind-key -r 9 new-window -c '#{pane_current_path}'  -n '⎈' k9s 
+        bind-key -r x kill-pane 
+      '';
+    };
     gh = {
       enable = true;
       settings = {
@@ -61,13 +126,12 @@
   home.file = {
     ".config/nvim".source = ./nvim;
     ".zshrc".source = ./zsh/.zshrc;
-    ".tmux.conf".source = ./tmux/.tmux.conf;
     "bin/.local".source = ./bin/.local;
     ".config/starship.toml".source = ./starship/config.toml;
+    ".config/ghostty/themes".source = ./ghostty/themes;
   };
 
   home.sessionVariables = {
     GDK_BACKEND = "wayland";
   };
-
 }

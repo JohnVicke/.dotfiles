@@ -10,7 +10,10 @@
       pager = { show = "bat"; };
       color = { ui = "auto"; };
       status = { showStash = true; };
-      push = { default = "simple"; };
+      push = { 
+        default = "simple"; 
+        autoSetupRemote = true;
+      };
       pull = { ff = "only"; };
       diff = {
         colorMoved = true;
@@ -25,6 +28,7 @@
       reword = "commit --amend";
       lease = "push --force-with-lease";
       tb = "!git commit --allow-empty -m '🛠️ Triggering build process' && git push";
+      wip = "!git add -A && git commit -m '🚧 WIP' --no-verify && git push --no-verify";
     };
     includes = [{
       condition ="gitdir:~/dev/anyfin/";

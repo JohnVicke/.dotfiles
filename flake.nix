@@ -2,6 +2,7 @@
   description = "Home Manager configuration of viktor";
 
   inputs = {
+    nixgl.url = "github:guibou/nixGL";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -10,10 +11,17 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    { nixpkgs, home-manager, nixgl, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (final: prev: {
+           nixGL = nixgl.packages.${system};
+           })
+        ];
+      };
     in
     {
       homeConfigurations."viktor" = home-manager.lib.homeManagerConfiguration {
