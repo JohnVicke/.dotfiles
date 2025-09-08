@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+scripts=$HOME/.dotfiles/bin/.local/scripts
+
+find $scripts -mindepth 1 -maxdepth 1 -type f | fzf --delimiter / --with-nth -1 | xargs -I {} bash -c {}

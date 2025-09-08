@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git log --color=always --decorate --oneline | fzf --ansi --reverse | awk '{ print $1 }'

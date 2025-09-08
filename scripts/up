@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+COMPOSE_DIR="${COMPOSE_DIR:-$HOME/dev/anyfin/environments}"
+
+for cmd in docker fzf; do
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "Error: Required command '$cmd' is not installed." >&2
+    exit 1
+  fi
+done
+
+if [ ! -d "$COMPOSE_DIR" ]; then
+  echo "Error: Docker Compose directory not found: $COMPOSE_DIR"
+  echo "Please ensure the path is correct or set the COMPOSE_DIR environment variable."
+  exit 1
+fi
+
+cd "$COMPOSE_DIR" || exit 1
+if [ ! -f "compose.yml" ]; then
+  echo "No docker-compose.yml found in $COMPOSE_DIR"
+  exit 1
+fi
+
+services=$(docker compose config --services)
+
+running_containers=$(docker compose ps --services)
+
+formatted_list=""
+while IFS= read -r service; do
+  if ! echo "$running_containers" | grep -q "^${service}$"; then
+    formatted_list=$(comm -23 \
+      <(echo "$services" | sort) \
+      <(echo "$running_containers" | sort))
+  fi
+done <<<"$services"
+
+preview_cmd='
+    echo "=== Currently Running Services ==="
+    docker compose ps --services | sed "s/^/  - /"
+    echo
+    echo "=== Services Selected to Start ==="
+    echo {+} | sed "s/^/  - /"
+'
+selected=$(
+  echo -e "$formatted_list" | fzf -m \
+    --header="Use Tab to select multiple services, Enter to confirm, Esc to cancel" \
+    --preview "$preview_cmd" \
+    --preview-window=right:40%:wrap \
+    --bind="tab:toggle+clear-query+refresh-preview" \
+    --bind="enter:accept" \
+    --bind="esc:cancel"
+)
+
+[ -z "$selected" ] && exit 0
+
+echo "Starting selected services..."
+echo "$selected" | xargs docker compose up -d

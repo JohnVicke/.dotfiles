@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+image_location=$HOME/Documents/httpcat
+http_code=$1
+
+if [ ! -f $image_location/$http_code.png ]; then
+	http https://http.cat/$http_code --download --output $image_location/$http_code.png
+fi
+
+open $image_location/$http_code.png

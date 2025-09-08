@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-local pids=$(ps -f -u $USER | sed 1d | fzf | awk '{print $2}')
-
-if [[ -n "$pids" ]]; then
-	echo "$pids" | xargs kill -9 "$@"
-fi

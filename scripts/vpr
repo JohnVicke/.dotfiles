@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+gh pr list | fzf | awk '{print $1}' | xargs -I {} gh pr view {} -w
+

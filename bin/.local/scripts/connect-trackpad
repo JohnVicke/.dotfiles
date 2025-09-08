@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-wh_mac_address=3C:A6:F6:BB:EB:DD
-bluetoothctl connect $wh_mac_address
