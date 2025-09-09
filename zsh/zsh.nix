@@ -46,9 +46,9 @@
         hms   = "home-manager switch --flake ~/.dotfiles";
       } // builtins.listToAttrs (
       map (i: {
-          name = builtins.concatStringsSep "" (builtins.genList (_: ".") i);
+          name = builtins.concatStringsSep "" (builtins.genList (_: ".") (i + 1));
           value = "cd " + (builtins.concatStringsSep "/" (builtins.genList (_: "..") i));
-          }) (builtins.genList (x: x + 2) 5)
+          }) (builtins.genList (x: x + 1) 5)
       );
     };
   };

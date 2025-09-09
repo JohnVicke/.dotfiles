@@ -16,6 +16,7 @@ in {
     ./git/git.nix 
     ./zsh/zsh.nix
     ./tmux/tmux.nix
+    # ./nvim2/nvim.nix
   ];
 
   home.packages = with pkgs; [

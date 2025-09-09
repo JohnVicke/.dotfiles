@@ -1,24 +1,11 @@
 return {
-  "kyazdani42/nvim-tree.lua",
-  dependencies = {
-    "kyazdani42/nvim-web-devicons",
-  },
-  lazy = false,
+  "stevearc/oil.nvim",
+  ---@module 'oil'
+  ---@type oil.SetupOpts
+  opts = {},
   keys = {
-    { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle nvim tree" },
-    { "<leader>fe", "<cmd>NvimTreeFindFile<cr>", desc = "Find file in filetree" },
+    { "<leader>e", "<cmd>Oil<cr>", desc = "Open parent directory" },
   },
-  opts = {
-    filters = {
-      custom = { ".git", "node_modules", ".vscode" },
-      dotfiles = true,
-    },
-    git = {},
-    view = {
-      adaptive_size = true,
-      float = {
-        enable = true,
-      },
-    },
-  },
+  dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  lazy = false,
 }
