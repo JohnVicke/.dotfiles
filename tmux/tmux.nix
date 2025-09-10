@@ -5,18 +5,38 @@
     tmux = { 
       enable = true; 
       sensibleOnTop = false;
-      plugins = with pkgs; [
-      {
-        plugin = tmuxPlugins.rose-pine;
-        extraConfig = '' 
-          set -g @rose_pine_variant 'main' 
-          set -g @rose_pine_bar_bg_disable 'on'
-          '';
-      }
-      ];
       extraConfig = ''
         set -g default-terminal "xterm-256color"
         set-option -ga terminal-overrides ",xterm-256color:RGB"
+# Vague theme colors
+        vague_bg="#141415"
+        vague_fg="#cdcdcd"
+        vague_selection="#252530"
+        vague_muted="#606079"
+        vague_accent="#6e94b2"
+
+# Status bar configuration
+        set -g status-style "bg=$vague_bg,fg=$vague_fg"
+        set -g status-left-length 50
+        set -g status-right-length 50
+
+# Left: Directory name (muted)
+        set -g status-left "#[fg=$vague_muted]#{b:session_path} "
+
+# Center: Windows
+        set -g status-justify centre
+        set -g window-status-format "#[fg=$vague_muted] #I:#W "
+        set -g window-status-current-format "#[fg=$vague_fg] #I:#W "
+
+# Right: Time (minimal)
+        set -g status-right ""
+
+# Window status separator
+        set -g window-status-separator ""
+
+# Remove default window status styling
+        set -g window-status-style "none"
+        set -g window-status-current-style "none"
 
         set -s escape-time 0
 
