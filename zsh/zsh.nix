@@ -37,6 +37,7 @@
         ];
       };
       shellAliases = {
+        pn    = "pnpm";
         cat   = "bat";
         find  = "fd";
         grep  = "rg";

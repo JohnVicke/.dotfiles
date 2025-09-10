@@ -1,16 +1,14 @@
-vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+-- Git blame settings
+vim.g.gitblame_display_virtual_text = 0
 vim.g.gitblame_message_when_not_committed = ""
-vim.g.gitblame_message_template = "💀 <author>, <date>"
+vim.g.gitblame_message_template = "<author>, <date>"
 vim.g.gitblame_date_format = "%r"
 
-local M = {}
 local Util = require("lazyvim.util")
 
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = {
-    "f-person/git-blame.nvim",
-  },
+  dependencies = { "f-person/git-blame.nvim" },
   event = "VeryLazy",
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
@@ -18,20 +16,16 @@ return {
       -- set an empty statusline till lualine loads
       vim.o.statusline = " "
     else
-      -- hide the statusline on the starter page
+      -- hide the statusline on starter/dashboard page
       vim.o.laststatus = 0
     end
   end,
   opts = function()
-    -- PERF: we don't need this lualine require madness 🤷
-    local lualine_require = require("lualine_require")
-    lualine_require.require = require
-
+    local git_blame = require("gitblame")
     local icons = require("lazyvim.config").icons
 
+    -- restore laststatus after lazy loading
     vim.o.laststatus = vim.g.lualine_laststatus
-
-    local git_blame = require("gitblame")
 
     return {
       options = {
@@ -58,57 +52,20 @@ return {
           { Util.lualine.pretty_path() },
         },
         lualine_x = {
-          {
-            git_blame.get_current_blame_text,
-            cond = git_blame.is_blame_text_available,
-          },
-          -- stylua: ignore
-          {
-            function() return require("noice").api.status.command.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-          },
-          -- stylua: ignore
-          {
-            function() return require("noice").api.status.mode.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-          },
-          -- stylua: ignore
-          {
-            function() return "  " .. require("dap").status() end,
-            cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-          },
-          {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-          },
+          { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
           {
             "diff",
-            symbols = {
-              added = icons.git.added,
-              modified = icons.git.modified,
-              removed = icons.git.removed,
-            },
+            symbols = { added = icons.git.added, modified = icons.git.modified, removed = icons.git.removed },
             source = function()
               local gitsigns = vim.b.gitsigns_status_dict
               if gitsigns then
-                return {
-                  added = gitsigns.added,
-                  modified = gitsigns.changed,
-                  removed = gitsigns.removed,
-                }
+                return { added = gitsigns.added, modified = gitsigns.changed, removed = gitsigns.removed }
               end
             end,
           },
         },
-        lualine_y = {
-          { "progress", separator = " ", padding = { left = 1, right = 0 } },
-          { "location", padding = { left = 0, right = 1 } },
-        },
-        lualine_z = {
-          function()
-            return " " .. os.date("%R")
-          end,
-        },
+        lualine_y = {},
+        lualine_z = {},
       },
     }
   end,
