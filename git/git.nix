@@ -21,12 +21,14 @@
       };
     };
     aliases = {
+      fu = "!git add . && git commit --fixup=HEAD && git rebase -i --autosquash HEAD~2 && git push --force-with-lease";
       lg = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
       oops = "commit --amend --no-edit";
       review-local="!git lg @{push}..'";
       uncommit = "reset --soft HEAD~1";
       reword = "commit --amend";
       lease = "push --force-with-lease";
+      wip = "!git add . && git commit -m 'wip' --no-verify && git push --no-verify";
       tb = "!git commit --allow-empty -m '🛠️ Triggering build process' && git push";
     };
     ignores = [

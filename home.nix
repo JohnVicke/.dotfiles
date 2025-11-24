@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, node_packages, ... }:
 
 let
   scriptFiles = builtins.attrNames (builtins.readDir ./scripts);
@@ -16,11 +16,15 @@ in {
     ./git/git.nix 
     ./zsh/zsh.nix
     ./tmux/tmux.nix
-    # ./nvim2/nvim.nix
+		./nvim/nvim.nix
   ];
 
-  home.packages = with pkgs; [
+  home.packages = ([
+		node_packages."@github/copilot"
+	]) ++ (with pkgs; [
+		go
     curl
+    bun
     fd
     eza
     ripgrep
@@ -29,20 +33,53 @@ in {
     unzip
     docker
     wl-clipboard
-  ] ++ scripts;
+    nodejs
+    yarn
+		fastfetch
+		zen-browser
+		node2nix
+  ]) ++ scripts;
 
   programs = {
+    lazydocker = { enable = true; };
     lazygit = { enable = true; };
     ghostty = {
       enable = true;
       enableZshIntegration = true;
       settings = { 
         font-family = "MonaspiceAr Nerd Font";
-        theme = "rose-pine";
+        theme = "vague";
       };
       package = pkgs.writeShellScriptBin "ghostty" ''
         exec ${pkgs.nixGL.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
         '';
+      themes = {
+        vague = {
+          palette = [
+              "0=#252530"
+              "1=#d8647e"
+              "2=#7fa563"
+              "3=#f3be7c"
+              "4=#6e94b2"
+              "5=#bb9dbd"
+              "6=#aeaed1"
+              "7=#cdcdcd"
+              "8=#606079"
+              "9=#e08398"
+              "10=#99b782"
+              "11=#f5cb96"
+              "12=#8ba9c1"
+              "13=#c9b1ca"
+              "14=#bebeda"
+              "15=#d7d7d7"
+          ];
+          background = "#141415";
+          foreground = "#cdcdcd";
+          cursor-color = "#cdcdcd";
+          selection-background = "#252530";
+          selection-foreground = "#cdcdcd";
+          };
+      };
     };
     home-manager = {enable = true; };
     neovim = { 
@@ -61,16 +98,10 @@ in {
             "$directory"
             "$git_branch$git_state"
             "$fill"
-            "$gcloud"
-            "$python$go$nodejs$lua"
             "$line_break"
             "$character"
         ];
-        character = {
-          success_symbol = "[\\[I\\] ➜](purple)";
-          error_symbol = "[\\[I\\] ➜](red)";
-          vicmd_symbol = "[\\[N\\] ➜](green)";
-        };
+        fill = { symbol = " "; };
         git_state = { 
           format = "\\([$state( $progress_current/$progress_total)]($style)\\)";
           style = "bright-black";
@@ -100,7 +131,6 @@ in {
   };
 
   home.file = {
-    ".config/nvim".source = ./nvim;
     "bin/.local".source = ./scripts;
   };
 

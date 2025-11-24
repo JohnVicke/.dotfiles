@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 personal=(~/dev/personal)
+stealth=(~/dev/stealth)
 anyfin=(~/dev/anyfin)
 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find $anyfin $personal -mindepth 1 -maxdepth 1 -type d | fzf --delimiter / --with-nth -2,-1)
+  selected=$(find $anyfin $stealth $personal -mindepth 1 -maxdepth 1 -type d | fzf --delimiter / --with-nth -2,-1)
 fi
 
 if [[ -z $selected ]]; then

@@ -13,6 +13,7 @@ vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.o.undofile = true
 vim.o.signcolumn = "yes"
+vim.o.pumblend = 0
 
 vim.g.mapleader = " "
 

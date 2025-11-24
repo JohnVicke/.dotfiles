@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Define your org
+ORG="anyfin"
+
+# Define your list of repos/projects
+PROJECTS=(
+  "api"
+  "deposits"
+  "admin"
+)
+
+# Use fzf in a popup window
+selected=$(printf '%s\n' "${PROJECTS[@]}" | fzf --height=40% --border --prompt="Select a project: ")
+
+# If something was selected, open the pulls page
+if [[ -n "$selected" ]]; then
+  zen "https://github.com/${ORG}/${selected}/pulls"
+fi
+
+
+
