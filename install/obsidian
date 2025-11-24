@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-wget -c https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.11/obsidian_1.5.11_amd64.deb
-sudo dpkg -i obsidian_1.5.11_amd64.deb
-rm obsidian_1.5.11_amd64.deb
