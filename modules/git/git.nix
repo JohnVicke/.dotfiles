@@ -4,17 +4,29 @@
     enable = true;
     userName = "Viktor Malmedal";
     userEmail = "38523983+johnvicke@users.noreply.github.com";
-    diff-so-fancy = { enable = true; };
+    diff-so-fancy = {
+      enable = true;
+    };
     extraConfig = {
-      init = { defaultBranch = "main"; };
-      pager = { show = "bat"; };
-      color = { ui = "auto"; };
-      status = { showStash = true; };
-      push = { 
-        default = "simple"; 
+      init = {
+        defaultBranch = "main";
+      };
+      pager = {
+        show = "bat";
+      };
+      color = {
+        ui = "auto";
+      };
+      status = {
+        showStash = true;
+      };
+      push = {
+        default = "simple";
         autoSetupRemote = true;
       };
-      pull = { ff = "only"; };
+      pull = {
+        ff = "only";
+      };
       diff = {
         colorMoved = true;
         colorMovedWS = "allow-indentation-change";
@@ -24,7 +36,7 @@
       fu = "!git add . && git commit --fixup=HEAD && git rebase -i --autosquash HEAD~2 && git push --force-with-lease";
       lg = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
       oops = "commit --amend --no-edit";
-      review-local="!git lg @{push}..'";
+      review-local = "!git lg @{push}..'";
       uncommit = "reset --soft HEAD~1";
       reword = "commit --amend";
       lease = "push --force-with-lease";
@@ -37,9 +49,11 @@
       ".direnv/"
       ".ctags.d/"
     ];
-    includes = [{
-      condition ="gitdir:~/dev/anyfin/";
-      path="./work";
-    }];
+    includes = [
+      {
+        condition = "gitdir:~/dev/anyfin/";
+        path = "./work";
+      }
+    ];
   };
 }
