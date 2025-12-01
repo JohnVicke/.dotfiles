@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs = {
     tmux = {
       enable = true;
@@ -74,7 +76,7 @@
                 bind -T copy-mode-vi MouseDragEnd1Pane \
                 send-keys -X copy-pipe-and-cancel "pbcopy"
 
-                set-option -g status-position top 
+                set-option -g status-position top
 
                 bind -r h select-pane -L
                 bind -r j select-pane -D
@@ -91,8 +93,8 @@
                 bind-key -r u run-shell "up"
                 bind-key -r g new-window -c '#{pane_current_path}'  -n '' lazygit
                 bind-key -r v new-window -c '#{pane_current_path}'  -n '' lazydocker
-                bind-key -r 9 new-window -c '#{pane_current_path}'  -n '⎈' k9s 
-                bind-key -r x kill-pane 
+                bind-key -r 9 new-window -c '#{pane_current_path}'  -n '⎈' k9s
+                bind-key -r x kill-pane
       '';
     };
   };

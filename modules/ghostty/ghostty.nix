@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
@@ -9,8 +11,8 @@
       theme = "vague";
     };
     package = pkgs.writeShellScriptBin "ghostty" ''
-      				exec ${pkgs.nixGL.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
-      				'';
+      exec ${pkgs.nixGL.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+    '';
     themes = {
       vague = {
         palette = [

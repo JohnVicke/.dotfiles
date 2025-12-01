@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   plenary = pkgs.vimPlugins.plenary-nvim;
   vague-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "vague.nvim";
@@ -15,7 +17,7 @@ let
   harpoon2 = pkgs.vimUtils.buildVimPlugin {
     pname = "harpoon";
     version = "2025-02-10";
-    buildInputs = [ plenary ];
+    buildInputs = [plenary];
     #  > Require check failed for the following modules:
     #  >   - harpoon.scratch.toggle
     doCheck = false;
@@ -26,8 +28,7 @@ let
       sha256 = "1dcpdlna2lff9dlsh6i4v16qmn5r9279wdvn0ry3xg4abqwnzc9g";
     };
   };
-in
-{
+in {
   home.packages = with pkgs; [
     lua-language-server
     typescript-language-server
@@ -39,6 +40,7 @@ in
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    withNodeJs = true;
 
     extraLuaConfig = ''
       ${builtins.readFile ./lua/util.lua}

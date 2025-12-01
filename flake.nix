@@ -16,35 +16,41 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      zen-browser,
-      home-manager,
-      nixgl,
-      ...
-    }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          (final: prev: {
-            nixGL = nixgl.packages.${system};
-            zen-browser = zen-browser.packages.${system}.beta;
-          })
-        ];
-      };
-      node_packages = import ./node_packages {
-        inherit pkgs system;
-        nodejs = pkgs.nodejs;
-      };
-    in
-    {
-      homeConfigurations."viktor" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit node_packages; };
-        modules = [ ./modules/home.nix ];
-      };
+  outputs = {
+    nixpkgs,
+    zen-browser,
+    home-manager,
+    nixgl,
+    ...
+  }: let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = [
+        (final: prev: {
+          nixGL = nixgl.packages.${system};
+          zen-browser = zen-browser.packages.${system}.beta;
+        })
+      ];
     };
+    node_packages = import ./node_packages {
+      inherit pkgs system;
+      nodejs = pkgs.nodejs;
+    };
+  in {
+    homeConfigurations."viktor" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {inherit node_packages;};
+      modules = [./modules/home.nix];
+    };
+
+    devShells.${system}.default = pkgs.mkShell {
+      buildInputs = with pkgs; [
+        alejandra
+        home-manager
+      ];
+    };
+
+    formatter.${system} = pkgs.alejandra;
+  };
 }

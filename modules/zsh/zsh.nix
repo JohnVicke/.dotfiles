@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   programs = {
     zsh = {
       enable = true;
@@ -36,22 +34,23 @@
           "zsh-users/zsh-syntax-highlighting"
         ];
       };
-      shellAliases = {
-        pn = "pnpm";
-        cat = "bat";
-        find = "fd";
-        grep = "rg";
-        ls = "exa";
-        t = "tmux";
-        v = "nvim";
-        hms = "home-manager switch --flake ~/.dotfiles";
-      }
-      // builtins.listToAttrs (
-        map (i: {
-          name = builtins.concatStringsSep "" (builtins.genList (_: ".") (i + 1));
-          value = "cd " + (builtins.concatStringsSep "/" (builtins.genList (_: "..") i));
-        }) (builtins.genList (x: x + 1) 5)
-      );
+      shellAliases =
+        {
+          pn = "pnpm";
+          cat = "bat";
+          find = "fd";
+          grep = "rg";
+          ls = "exa";
+          t = "tmux";
+          v = "nvim";
+          hms = "home-manager switch --flake ~/.dotfiles";
+        }
+        // builtins.listToAttrs (
+          map (i: {
+            name = builtins.concatStringsSep "" (builtins.genList (_: ".") (i + 1));
+            value = "cd " + (builtins.concatStringsSep "/" (builtins.genList (_: "..") i));
+          }) (builtins.genList (x: x + 1) 5)
+        );
     };
   };
 }

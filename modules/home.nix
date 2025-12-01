@@ -5,16 +5,15 @@
   inputs,
   node_packages,
   ...
-}:
-
-let
+}: let
   scriptFiles = builtins.attrNames (builtins.readDir ./scripts);
 
-  scripts = map (
-    name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
-  ) scriptFiles;
-in
-{
+  scripts =
+    map (
+      name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
+    )
+    scriptFiles;
+in {
   home.username = "viktor";
   home.homeDirectory = "/home/viktor";
   xdg.configHome = "/home/viktor/.config/";
@@ -29,27 +28,28 @@ in
     ./nvim/nvim.nix
   ];
 
-  home.packages = ([
-    node_packages."@github/copilot"
-  ])
-  ++ (with pkgs; [
-    nixfmt
-    go
-    curl
-    bun
-    fd
-    eza
-    ripgrep
-    bat
-    fzf
-    unzip
-    docker
-    wl-clipboard
-    fastfetch
-    zen-browser
-    node2nix
-  ])
-  ++ scripts;
+  home.packages =
+    [
+      node_packages."@github/copilot"
+    ]
+    ++ (with pkgs; [
+      nixfmt
+      go
+      curl
+      bun
+      fd
+      eza
+      ripgrep
+      bat
+      fzf
+      unzip
+      docker
+      wl-clipboard
+      fastfetch
+      zen-browser
+      node2nix
+    ])
+    ++ scripts;
 
   programs = {
     lazydocker = {
@@ -82,6 +82,12 @@ in
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+
+      config = {
+        global = {
+          log_format = "📦: %s";
+        };
+      };
     };
   };
 
