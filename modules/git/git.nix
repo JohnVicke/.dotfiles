@@ -33,7 +33,7 @@
       };
     };
     aliases = {
-      fu = "!git add . && git commit --fixup=HEAD && GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash HEAD~2 && git push --force-with-lease";
+      fu = "!git add . && git commit --fixup=HEAD && git push --force-with-lease";
       lg = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
       oops = "commit --amend --no-edit";
       review-local = "!git lg @{push}..'";
