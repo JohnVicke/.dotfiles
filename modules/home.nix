@@ -13,6 +13,7 @@
       name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
     )
     scriptFiles;
+  opencode-bun = pkgs.callPackage ./opencode-bun/opencode-bun.nix {};
 in {
   home.username = "viktor";
   home.homeDirectory = "/home/viktor";
@@ -31,6 +32,7 @@ in {
   home.packages =
     [
       node_packages."@github/copilot"
+      opencode-bun
     ]
     ++ (with pkgs; [
       nixfmt
@@ -48,6 +50,8 @@ in {
       fastfetch
       zen-browser
       node2nix
+      just
+      apacheHttpd
     ])
     ++ scripts;
 

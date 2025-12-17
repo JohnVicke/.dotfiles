@@ -13,10 +13,10 @@ in {
   "@github/copilot" = nodeEnv.buildNodePackage {
     name = "_at_github_slash_copilot";
     packageName = "@github/copilot";
-    version = "0.0.362";
+    version = "0.0.369";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@github/copilot/-/copilot-0.0.362.tgz";
-      sha512 = "oRsXkK0YltgXwdDCOlJTKyTnCvSaJ8hV99o57c8RbcDf5DrQj7BQJbONRqpmTaZQBJY/4UOCXpmTk2Sq4eusGQ==";
+      url = "https://registry.npmjs.org/@github/copilot/-/copilot-0.0.369.tgz";
+      sha512 = "uIjzFTYyRSoql/8LqZCUICOV24utytlRnYuu4LsEzRISox9FA7MGfuMmcVZrfuvZg4C7gT/o8Ilm7rNICXf7DA==";
     };
     buildInputs = globalBuildInputs;
     meta = {

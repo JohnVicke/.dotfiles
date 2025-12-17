@@ -48,6 +48,8 @@
       buildInputs = with pkgs; [
         alejandra
         home-manager
+        just
+        node2nix
       ];
     };
 

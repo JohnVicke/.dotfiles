@@ -112,11 +112,13 @@
         mkdir -p node_modules
         cd node_modules
       ''
-      + (lib.concatMapStrings (dependency: ''
-          if [ ! -e "${dependency.packageName}" ]; then
-              ${composePackage dependency}
-          fi
-        '')
+      + (lib.concatMapStrings (
+          dependency: ''
+            if [ ! -e "${dependency.packageName}" ]; then
+                ${composePackage dependency}
+            fi
+          ''
+        )
         dependencies)
       + ''
         cd ..
@@ -205,14 +207,15 @@
       else "development"
     }
 
-    ${lib.optionalString (dependencies != []) ''
-      if [ -d node_modules ]
-      then
-          cd node_modules
-          ${lib.concatMapStrings (dependency: pinpointDependenciesOfPackage dependency) dependencies}
-          cd ..
-      fi
-    ''}
+    ${lib.optionalString (dependencies != [])
+      ''
+        if [ -d node_modules ]
+        then
+            cd node_modules
+            ${lib.concatMapStrings (dependency: pinpointDependenciesOfPackage dependency) dependencies}
+            cd ..
+        fi
+      ''}
   '';
 
   # Recursively traverses all dependencies of a package and pinpoints all
@@ -529,31 +532,16 @@
     meta ? {},
     ...
   } @ args: let
-    extraArgs = removeAttrs args [
-      "name"
-      "dependencies"
-      "buildInputs"
-      "dontStrip"
-      "dontNpmInstall"
-      "preRebuild"
-      "unpackPhase"
-      "buildPhase"
-      "meta"
-    ];
+    extraArgs = removeAttrs args ["name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "preRebuild" "unpackPhase" "buildPhase" "meta"];
   in
-    stdenv.mkDerivation (
-      {
+    stdenv.mkDerivation ({
         name = "${name}${
           if version == null
           then ""
           else "-${version}"
         }";
         buildInputs =
-          [
-            tarWrapper
-            python
-            nodejs
-          ]
+          [tarWrapper python nodejs]
           ++ lib.optional (stdenv.isLinux) utillinux
           ++ lib.optional (stdenv.isDarwin) libtool
           ++ buildInputs;
@@ -561,20 +549,12 @@
         inherit nodejs;
 
         inherit dontStrip; # Stripping may fail a build for some package deployments
-        inherit
-          dontNpmInstall
-          preRebuild
-          unpackPhase
-          buildPhase
-          ;
+        inherit dontNpmInstall preRebuild unpackPhase buildPhase;
 
         compositionScript = composePackage args;
         pinpointDependenciesScript = pinpointDependenciesOfPackage args;
 
-        passAsFile = [
-          "compositionScript"
-          "pinpointDependenciesScript"
-        ];
+        passAsFile = ["compositionScript" "pinpointDependenciesScript"];
 
         installPhase = ''
           source ${installPackage}
@@ -586,15 +566,7 @@
           # Compose the package and all its dependencies
           source $compositionScriptPath
 
-          ${prepareAndInvokeNPM {
-            inherit
-              packageName
-              bypassCache
-              reconstructLock
-              npmFlags
-              production
-              ;
-          }}
+          ${prepareAndInvokeNPM {inherit packageName bypassCache reconstructLock npmFlags production;}}
 
           # Create symlink to the deployed executable folder, if applicable
           if [ -d "$out/lib/node_modules/.bin" ]
@@ -638,8 +610,7 @@
           }
           // meta;
       }
-      // extraArgs
-    );
+      // extraArgs);
 
   # Builds a node environment (a node_modules folder and a set of binaries)
   buildNodeDependencies = {
@@ -659,14 +630,9 @@
     buildPhase ? "true",
     ...
   } @ args: let
-    extraArgs = removeAttrs args [
-      "name"
-      "dependencies"
-      "buildInputs"
-    ];
+    extraArgs = removeAttrs args ["name" "dependencies" "buildInputs"];
   in
-    stdenv.mkDerivation (
-      {
+    stdenv.mkDerivation ({
         name = "node-dependencies-${name}${
           if version == null
           then ""
@@ -674,11 +640,7 @@
         }";
 
         buildInputs =
-          [
-            tarWrapper
-            python
-            nodejs
-          ]
+          [tarWrapper python nodejs]
           ++ lib.optional (stdenv.isLinux) utillinux
           ++ lib.optional (stdenv.isDarwin) libtool
           ++ buildInputs;
@@ -689,10 +651,7 @@
         includeScript = includeDependencies {inherit dependencies;};
         pinpointDependenciesScript = pinpointDependenciesOfPackage args;
 
-        passAsFile = [
-          "includeScript"
-          "pinpointDependenciesScript"
-        ];
+        passAsFile = ["includeScript" "pinpointDependenciesScript"];
 
         installPhase = ''
           source ${installPackage}
@@ -717,15 +676,7 @@
           cd ..
           ${lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
 
-          ${prepareAndInvokeNPM {
-            inherit
-              packageName
-              bypassCache
-              reconstructLock
-              npmFlags
-              production
-              ;
-          }}
+          ${prepareAndInvokeNPM {inherit packageName bypassCache reconstructLock npmFlags production;}}
 
           # Expose the executables that were installed
           cd ..
@@ -735,8 +686,7 @@
           ln -s $out/lib/node_modules/.bin $out/bin
         '';
       }
-      // extraArgs
-    );
+      // extraArgs);
 
   # Builds a development shell
   buildNodeShell = {
@@ -757,31 +707,16 @@
     ...
   } @ args: let
     nodeDependencies = buildNodeDependencies args;
-    extraArgs = removeAttrs args [
-      "name"
-      "dependencies"
-      "buildInputs"
-      "dontStrip"
-      "dontNpmInstall"
-      "unpackPhase"
-      "buildPhase"
-    ];
+    extraArgs = removeAttrs args ["name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "unpackPhase" "buildPhase"];
   in
-    stdenv.mkDerivation (
-      {
+    stdenv.mkDerivation ({
         name = "node-shell-${name}${
           if version == null
           then ""
           else "-${version}"
         }";
 
-        buildInputs =
-          [
-            python
-            nodejs
-          ]
-          ++ lib.optional (stdenv.isLinux) utillinux
-          ++ buildInputs;
+        buildInputs = [python nodejs] ++ lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
         buildCommand = ''
           mkdir -p $out/bin
           cat > $out/bin/shell <<EOF
@@ -799,8 +734,7 @@
           export PATH="${nodeDependencies}/bin:$PATH"
         '';
       }
-      // extraArgs
-    );
+      // extraArgs);
 in {
   buildNodeSourceDist = lib.makeOverridable buildNodeSourceDist;
   buildNodePackage = lib.makeOverridable buildNodePackage;

@@ -27,4 +27,11 @@ nnoremap("<C-u>", "<C-u>zz")
 nnoremap("<C-d>", "<C-d>zz")
 vnoremap("<leader>64", "c<c-r>=system('base64 --decode', @\")<cr><esc>")
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
+	end,
+})
+
 vim.cmd(":hi statusline guibg=NONE")

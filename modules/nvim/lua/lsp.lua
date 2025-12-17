@@ -9,7 +9,7 @@ local function select_preferred_client(bufnr, method)
 
 	-- For JS/TS files, use priority system
 	if vim.tbl_contains(js_ts_filetypes, filetype) then
-		local priority = { "biome", "null-ls", "prettier", "ts_ls", "eslint" }
+		local priority = { "biome", "null-ls", "prettier", "eslint", "ts_ls" }
 
 		for _, preferred in ipairs(priority) do
 			for _, client in ipairs(clients) do
@@ -49,10 +49,15 @@ local function smart_format(bufnr)
 end
 
 
-local function fzf_code_actions(bufnr, range)
+local function fzf_code_actions(bufnr, range, context)
+	local params = vim.lsp.util.make_range_params()
+	params.context = context or {
+		diagnostics = vim.lsp.diagnostic.get_line_diagnostics(bufnr)
+	}
 	require("fzf-lua").lsp_code_actions({
 		bufnr = bufnr,
 		range = range,
+		params = params,
 		previewer = function(action)
 			if action and action.edit then
 				return true
@@ -122,6 +127,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if ok then
 			nmap("<leader>ca", function()
 				fzf_code_actions(bufnr)
+			end)
+			nmap("<leader>cA", function()
+				fzf_code_actions(bufnr, nil, { diagnostics = {} })
 			end)
 			nmap("gr", function()
 				fzf.lsp_references({ bufnr = bufnr })

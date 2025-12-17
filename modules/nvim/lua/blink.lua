@@ -14,13 +14,14 @@ require("blink.cmp").setup({
 	},
 	snippets = { preset = "luasnip" },
 	sources = {
-		default = { "lsp", "path", "snippets", "buffer", "omni" },
+		default = { "lsp", "path", "snippets", "buffer", "omni", "dadbod" },
 		providers = {
-			lsp      = { name = "LSP",  score_offset = 40 },
+			lsp      = { name = "LSP", score_offset = 40 },
 			path     = { name = "Path", score_offset = 50 },
 			snippets = { name = "Snip", score_offset = 40 },
 			buffer   = { name = "Buffer" },
 			omni     = { name = "Omni" },
+		  dadbod   = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 		},
 	},
 	cmdline = {

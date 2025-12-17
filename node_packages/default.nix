@@ -8,15 +8,7 @@
   nodejs ? pkgs."nodejs_14",
 }: let
   nodeEnv = import ./node-env.nix {
-    inherit
-      (pkgs)
-      stdenv
-      lib
-      python2
-      runCommand
-      writeTextFile
-      writeShellScript
-      ;
+    inherit (pkgs) stdenv lib python2 runCommand writeTextFile writeShellScript;
     inherit pkgs nodejs;
     libtool =
       if pkgs.stdenv.isDarwin
@@ -25,13 +17,6 @@
   };
 in
   import ./node-packages.nix {
-    inherit
-      (pkgs)
-      fetchurl
-      nix-gitignore
-      stdenv
-      lib
-      fetchgit
-      ;
+    inherit (pkgs) fetchurl nix-gitignore stdenv lib fetchgit;
     inherit nodeEnv;
   }
