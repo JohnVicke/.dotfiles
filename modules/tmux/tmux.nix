@@ -54,13 +54,13 @@
                 unbind %
 
                 bind r source-file ~/.config/tmux/tmux.conf \; display-message "config reloaded";
-              set -g mouse on
+              	set -g mouse on
 
                 set-window-option -g mode-keys vi;
 
-              bind V copy-mode;
+              	bind V copy-mode;
 
-              bind -T copy-mode-vi V send-keys -X cancel
+              	bind -T copy-mode-vi V send-keys -X cancel
 
                 unbind -T copy-mode-vi v
 
@@ -89,8 +89,9 @@
                 bind -n M-l resize-pane -R 5
 
                 bind-key 'w' choose-tree -Zs
-                bind-key -r f run-shell "tmux neww tmux-sessionizer"
-                bind-key -r u run-shell "up"
+                 bind-key -r f run-shell "tmux neww tmux-sessionizer"
+                 bind-key -r a run-shell "tmux-sessionizer ~/.dotfiles"
+                 bind-key -r u run-shell "up"
                 bind-key -r g new-window -c '#{pane_current_path}'  -n '' lazygit
                 bind-key -r v new-window -c '#{pane_current_path}'  -n '' lazydocker
                 bind-key -r 9 new-window -c '#{pane_current_path}'  -n '⎈' k9s

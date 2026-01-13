@@ -147,19 +147,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Configure Zig LSP
 vim.lsp.config("zig", {
-	cmd = { "zls" },
-	filetypes = { "zig" },
-	root_markers = { "build.zig", ".git" },
+  cmd = { "zls" },
+  filetypes = { "zig" },
+  root_markers = { "build.zig", ".git" },
 })
 
 vim.lsp.enable({
-	"lua_ls",
-	"ts_ls",
-	"biome",
-	"gopls",
-	"eslint",
-	"astro",
-	"zig"
+  "lua_ls",
+  "ts_ls",
+  "biome",
+  "gopls",
+  "eslint",
+  "astro",
+  "zig",
+  "tailwindcss"
 })
 
 local mappings = {

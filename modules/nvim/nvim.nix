@@ -63,6 +63,8 @@ in {
     lua-language-server
     typescript-language-server
     gopls
+    tailwindcss-language-server
+    vscode-js-debug
   ];
 
   programs.neovim = {
@@ -154,6 +156,15 @@ in {
       }
       {
         plugin = dadbod-ui;
+      }
+      # DAP (Debug Adapter Protocol)
+      nvim-nio
+      nvim-dap
+      nvim-dap-virtual-text
+      {
+        plugin = nvim-dap-ui;
+        type = "lua";
+        config = builtins.readFile ./lua/dap.lua;
       }
     ];
   };

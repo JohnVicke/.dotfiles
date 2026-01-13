@@ -5,16 +5,16 @@
   inputs,
   node_packages,
   ...
-}: let
+}:
+let
   scriptFiles = builtins.attrNames (builtins.readDir ./scripts);
 
-  scripts =
-    map (
-      name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
-    )
-    scriptFiles;
-  opencode-bun = pkgs.callPackage ./opencode-bun/opencode-bun.nix {};
-in {
+  scripts = map (
+    name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
+  ) scriptFiles;
+  opencode-bun = pkgs.callPackage ./opencode-bun/opencode-bun.nix { };
+in
+{
   home.username = "viktor";
   home.homeDirectory = "/home/viktor";
   xdg.configHome = "/home/viktor/.config/";
@@ -29,31 +29,32 @@ in {
     ./nvim/nvim.nix
   ];
 
-  home.packages =
-    [
-      node_packages."@github/copilot"
-      opencode-bun
-    ]
-    ++ (with pkgs; [
-      nixfmt
-      go
-      curl
-      bun
-      fd
-      eza
-      ripgrep
-      bat
-      fzf
-      unzip
-      docker
-      wl-clipboard
-      fastfetch
-      zen-browser
-      node2nix
-      just
-      apacheHttpd
-    ])
-    ++ scripts;
+  home.packages = [
+    node_packages."@github/copilot"
+    opencode-bun
+  ]
+  ++ (with pkgs; [
+    kooha
+    nixfmt
+    go
+    curl
+    bun
+    fd
+    eza
+    ripgrep
+    bat
+    fzf
+    unzip
+    docker
+    wl-clipboard
+    fastfetch
+    zen-browser
+    node2nix
+    just
+    apacheHttpd
+		uv
+  ])
+  ++ scripts;
 
   programs = {
     lazydocker = {
@@ -97,6 +98,10 @@ in {
 
   home.file = {
     "bin/.local".source = ./scripts;
+    ".config/opencode/opencode.json".source = ./opencode-bun/opencode.json;
+    ".config/opencode/AGENTS.md".source = ./opencode-bun/AGENTS.md;
+    ".config/opencode/agent".source = ./opencode-bun/agent;
+    ".config/opencode/skill".source = ./opencode-bun/skill;
   };
 
   home.sessionVariables = {

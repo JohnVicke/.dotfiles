@@ -9,6 +9,9 @@
              zmodload zsh/zprof
           fi
 
+          # Source secrets if present
+          [ -f ~/.secrets ] && source ~/.secrets
+
           zstyle ':completion:*' use-cache on
           zstyle ':completion:*' cache-path ~/.zsh/cache
           mkdir -p ~/.zsh/cache
@@ -43,7 +46,6 @@
           ls = "exa";
           t = "tmux";
           v = "nvim";
-          hms = "home-manager switch --flake ~/.dotfiles";
         }
         // builtins.listToAttrs (
           map (i: {
