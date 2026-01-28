@@ -31,7 +31,6 @@ in
 
   home.packages = [
     node_packages."@github/copilot"
-    opencode-bun
   ]
   ++ (with pkgs; [
     kooha
@@ -45,18 +44,21 @@ in
     bat
     fzf
     unzip
+    uv
     docker
     wl-clipboard
     fastfetch
-    zen-browser
     node2nix
     just
     apacheHttpd
-		uv
+    yazi
   ])
   ++ scripts;
 
   programs = {
+    zen-browser = {
+      enable = true;
+    };
     lazydocker = {
       enable = true;
     };
@@ -102,9 +104,38 @@ in
     ".config/opencode/AGENTS.md".source = ./opencode-bun/AGENTS.md;
     ".config/opencode/agent".source = ./opencode-bun/agent;
     ".config/opencode/skill".source = ./opencode-bun/skill;
+    ".config/opencode/command".source = ./opencode-bun/command;
   };
 
   home.sessionVariables = {
     GDK_BACKEND = "wayland";
   };
+
+  xdg.mimeApps =
+    let
+      zenDesktop = config.programs.zen-browser.package.meta.desktopFileName;
+      associations = builtins.listToAttrs (
+        map
+          (name: {
+            inherit name;
+            value = zenDesktop;
+          })
+          [
+            "text/html"
+            "application/xhtml+xml"
+            "x-scheme-handler/http"
+            "x-scheme-handler/https"
+            "x-scheme-handler/about"
+            "x-scheme-handler/unknown"
+            "x-scheme-handler/chrome"
+          ]
+      );
+    in
+    {
+      enable = true;
+      associations.added = associations;
+      defaultApplications = associations;
+    };
+
+  xdg.configFile."mimeapps.list".force = true;
 }

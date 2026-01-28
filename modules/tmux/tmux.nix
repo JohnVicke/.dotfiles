@@ -42,6 +42,11 @@
 
                 set -s escape-time 0
 
+								# Enable extended keys (CSI u encoding) for proper modifier support
+								# Allows Shift+enter, Ctrl+shift+key, etc to work properly
+								set -s extended-keys on
+								set -as terminal-features 'xterm*:extkeys'
+
                 unbind c-b
                 set-option -g prefix c-t
                 bind-key c-t send-prefix

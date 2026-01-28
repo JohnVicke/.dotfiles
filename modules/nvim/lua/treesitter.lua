@@ -1,11 +1,13 @@
-local treesitter = require("nvim-treesitter.configs")
+-- Highlighting: enable treesitter for all filetypes with a parser
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
 
-treesitter.setup({
-	ensure_installed = {},
-	ignore_install = {},
-	modules = {},
-	auto_install = false,
-	sync_install = false,
-	highlight = { enable = true },
-	indent = { enable = true },
+-- Indentation: enable treesitter-based indentation
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
 })

@@ -8,10 +8,10 @@
     pname = "vague.nvim";
     version = "2024-09-06";
     src = pkgs.fetchFromGitHub {
-      owner = "vague2k";
+      owner = "vague-theme";
       repo = "vague.nvim";
-      rev = "main";
-      sha256 = "10cq9rd1ls9zcqbgq29yxycidsksk068mh6sxdw1w90l15xvl1ka";
+      rev = "fcc283576764474ccfbbcca240797d5d7f4d8a78";
+      sha256 = "sha256-upqvTAnmJBAIoyzGxv+hq04dvS5wv3bjkbx2pWLCp+s=";
     };
   };
   harpoon2 = pkgs.vimUtils.buildVimPlugin {

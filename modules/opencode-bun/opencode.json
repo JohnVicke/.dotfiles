@@ -38,6 +38,37 @@
         "@playwright/mcp@latest"
       ],
       "enabled": false
+    },
+    "jaeger": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "jaeger-mcp-server"
+      ],
+      "environment": {
+        "JAEGER_URL": "http://localhost:16686",
+        "JAEGER_PORT": "16686",
+        "JAEGER_PROTOCOL": "HTTP"
+      },
+      "enabled": false
+    },
+    "figma": {
+      "type": "remote",
+      "url": "https://mcp.figma.com/mcp",
+      "enabled": false
+    },
+    "Sentry": {
+			"type": "remote",
+      "url": "https://mcp.sentry.dev/mcp",
+      "oauth": {}
+    },
+    "nixos": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-nixos"
+      ],
+      "enabled": false
     }
   }
 }

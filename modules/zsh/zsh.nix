@@ -5,6 +5,7 @@
       enableCompletion = false;
       initContent = lib.mkMerge [
         (lib.mkOrder 500 ''
+					export PATH="$PATH:$HOME/.opencode/bin"
           if [ -n "''${ZSH_DEBUGRC+1}" ]; then
              zmodload zsh/zprof
           fi
