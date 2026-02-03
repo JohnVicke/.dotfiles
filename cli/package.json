@@ -1,0 +1,26 @@
+{
+  "name": "cli",
+  "module": "src/cli.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "bun build --compile --minify --sourcemap --bytecode ./src/cli.ts  --outfile ../modules/scripts/cli",
+    "prepare": "effect-language-service patch"
+  },
+  "devDependencies": {
+    "@effect/language-service": "^0.72.0",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@effect/cli": "^0.73.1",
+    "@effect/cluster": "^0.56.1",
+    "@effect/experimental": "^0.58.0",
+    "@effect/platform": "^0.94.2",
+    "@effect/platform-bun": "^0.87.1",
+    "@effect/typeclass": "^0.38.0",
+    "effect": "^3.19.15"
+  }
+}

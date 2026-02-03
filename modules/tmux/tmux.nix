@@ -42,10 +42,10 @@
 
                 set -s escape-time 0
 
-								# Enable extended keys (CSI u encoding) for proper modifier support
-								# Allows Shift+enter, Ctrl+shift+key, etc to work properly
-								set -s extended-keys on
-								set -as terminal-features 'xterm*:extkeys'
+        # Enable extended keys (CSI u encoding) for proper modifier support
+        # Allows Shift+enter, Ctrl+shift+key, etc to work properly
+        set -s extended-keys on
+        set -as terminal-features 'xterm*:extkeys'
 
                 unbind c-b
                 set-option -g prefix c-t
@@ -97,7 +97,7 @@
                  bind-key -r f run-shell "tmux neww tmux-sessionizer"
                  bind-key -r a run-shell "tmux-sessionizer ~/.dotfiles"
                  bind-key -r u run-shell "up"
-                bind-key -r g new-window -c '#{pane_current_path}'  -n '' lazygit
+                     bind-key -r g new-window -c '#{pane_current_path}' -n '' \; send-keys 'eval "$(direnv export zsh)" && exec lazygit' Enter
                 bind-key -r v new-window -c '#{pane_current_path}'  -n '' lazydocker
                 bind-key -r 9 new-window -c '#{pane_current_path}'  -n '⎈' k9s
                 bind-key -r x kill-pane

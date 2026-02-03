@@ -4,6 +4,29 @@
   ...
 }: let
   plenary = pkgs.vimPlugins.plenary-nvim;
+  treesitterPlugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (
+    plugins:
+      with plugins; [
+        bash
+        css
+        dockerfile
+        go
+        html
+        javascript
+        json
+        lua
+        markdown
+        markdown_inline
+        nix
+        python
+        regex
+        toml
+        tsx
+        typescript
+        vim
+        yaml
+      ]
+  );
   vague-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "vague.nvim";
     version = "2024-09-06";
@@ -59,6 +82,8 @@
     };
   };
 in {
+  xdg.configFile."nvim/lua".source = ./lua;
+
   home.packages = with pkgs; [
     lua-language-server
     typescript-language-server
@@ -75,46 +100,80 @@ in {
     withNodeJs = true;
 
     extraLuaConfig = ''
-      ${builtins.readFile ./lua/util.lua}
-      ${builtins.readFile ./lua/settings.lua}
+      pcall(function()
+        vim.loader.enable()
+      end)
+      dofile(vim.fn.stdpath("config") .. "/lua/util.lua")
+      dofile(vim.fn.stdpath("config") .. "/lua/settings.lua")
     '';
 
     # available plugins: https://github.com/NixNeovim/NixNeovimPlugins/blob/main/plugins.md
     plugins = with pkgs.vimPlugins; [
       {
-        plugin = nvim-treesitter.withAllGrammars;
+        plugin = treesitterPlugin;
         type = "lua";
-        config = builtins.readFile ./lua/treesitter.lua;
+        config = ''
+          dofile(vim.fn.stdpath("config") .. "/lua/treesitter.lua")
+        '';
       }
       {
         plugin = luasnip;
         type = "lua";
-        config = builtins.readFile ./lua/luasnip.lua;
+        config = ''
+          dofile(vim.fn.stdpath("config") .. "/lua/luasnip.lua")
+        '';
       }
       {
         plugin = fzf-lua;
         type = "lua";
-        config = builtins.readFile ./lua/fzf.lua;
+        config = ''
+          dofile(vim.fn.stdpath("config") .. "/lua/fzf.lua")
+        '';
       }
       {
         plugin = nvim-lspconfig;
         type = "lua";
-        config = builtins.readFile ./lua/lsp.lua;
+        config = ''
+          dofile(vim.fn.stdpath("config") .. "/lua/lsp.lua")
+        '';
       }
       {
         plugin = none-ls-nvim;
         type = "lua";
-        config = builtins.readFile ./lua/none.lua;
+        config = ''
+          local function hm_load_none()
+            dofile(vim.fn.stdpath("config") .. "/lua/none.lua")
+          end
+
+          vim.api.nvim_create_autocmd("BufReadPre", {
+            once = true,
+            callback = hm_load_none,
+          })
+        '';
       }
       {
         plugin = blink-cmp;
         type = "lua";
-        config = builtins.readFile ./lua/blink.lua;
+        config = ''
+          vim.api.nvim_create_autocmd("InsertEnter", {
+            once = true,
+            callback = function()
+              dofile(vim.fn.stdpath("config") .. "/lua/blink.lua")
+            end,
+          })
+        '';
       }
       {
         plugin = copilot-lua;
         type = "lua";
-        config = builtins.readFile ./lua/copilot.lua;
+        config = ''
+          vim.api.nvim_create_autocmd("InsertEnter", {
+            once = true,
+            callback = function()
+              dofile(vim.fn.stdpath("config") .. "/lua/copilot.lua")
+            end,
+          })
+        '';
       }
       {
         plugin = vague-nvim;
@@ -126,7 +185,9 @@ in {
       {
         plugin = oil-nvim;
         type = "lua";
-        config = builtins.readFile ./lua/oil.lua;
+        config = ''
+          dofile(vim.fn.stdpath("config") .. "/lua/oil.lua")
+        '';
       }
       {
         plugin = plenary;
@@ -134,22 +195,47 @@ in {
       {
         plugin = harpoon2;
         type = "lua";
-        config = builtins.readFile ./lua/harpoon.lua;
+        config = ''
+          vim.api.nvim_create_autocmd("VimEnter", {
+            once = true,
+            callback = function()
+              dofile(vim.fn.stdpath("config") .. "/lua/harpoon.lua")
+            end,
+          })
+        '';
       }
       {
         plugin = gitsigns-nvim;
         type = "lua";
-        config = builtins.readFile ./lua/gitsigns.lua;
+        config = ''
+          dofile(vim.fn.stdpath("config") .. "/lua/gitsigns.lua")
+        '';
       }
       {
         plugin = tsc-nvim;
         type = "lua";
-        config = builtins.readFile ./lua/tsc.lua;
+        config = ''
+          vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+            pattern = { "*.ts", "*.tsx" },
+            once = true,
+            callback = function()
+              dofile(vim.fn.stdpath("config") .. "/lua/tsc.lua")
+            end,
+          })
+        '';
       }
       {
         plugin = dadbod;
         type = "lua";
-        config = builtins.readFile ./lua/dadbod.lua;
+        config = ''
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "sql", "mysql", "plsql" },
+            once = true,
+            callback = function()
+              dofile(vim.fn.stdpath("config") .. "/lua/dadbod.lua")
+            end,
+          })
+        '';
       }
       {
         plugin = dadbod-completion;
@@ -164,7 +250,14 @@ in {
       {
         plugin = nvim-dap-ui;
         type = "lua";
-        config = builtins.readFile ./lua/dap.lua;
+        config = ''
+          vim.api.nvim_create_autocmd("BufReadPost", {
+            once = true,
+            callback = function()
+              dofile(vim.fn.stdpath("config") .. "/lua/dap.lua")
+            end,
+          })
+        '';
       }
     ];
   };

@@ -22,6 +22,10 @@ remove-node package:
 rebuild:
     home-manager switch --flake .
 
+# Roll back to previous home-manager generation
+rollback:
+    home-manager switch --rollback
+
 # Build without switching (test configuration)
 build:
     home-manager build --flake .

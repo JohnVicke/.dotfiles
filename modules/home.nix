@@ -5,20 +5,21 @@
   inputs,
   node_packages,
   ...
-}:
-let
+}: let
   scriptFiles = builtins.attrNames (builtins.readDir ./scripts);
 
-  scripts = map (
-    name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
-  ) scriptFiles;
-  opencode-bun = pkgs.callPackage ./opencode-bun/opencode-bun.nix { };
-in
-{
+  scripts =
+    map (
+      name: pkgs.writeShellScriptBin name (builtins.readFile ./scripts/${name})
+    )
+    scriptFiles;
+  opencode-bun = pkgs.callPackage ./opencode-bun/opencode-bun.nix {};
+in {
   home.username = "viktor";
   home.homeDirectory = "/home/viktor";
-  xdg.configHome = "/home/viktor/.config/";
-  home.stateVersion = "25.05";
+  xdg.configHome = "/home/viktor/.config";
+  xdg.cacheHome = "/home/viktor/.cache";
+  home.stateVersion = "24.11";
 
   imports = [
     ./startship/starship.nix
@@ -29,31 +30,33 @@ in
     ./nvim/nvim.nix
   ];
 
-  home.packages = [
-    node_packages."@github/copilot"
-  ]
-  ++ (with pkgs; [
-    kooha
-    nixfmt
-    go
-    curl
-    bun
-    fd
-    eza
-    ripgrep
-    bat
-    fzf
-    unzip
-    uv
-    docker
-    wl-clipboard
-    fastfetch
-    node2nix
-    just
-    apacheHttpd
-    yazi
-  ])
-  ++ scripts;
+  home.packages =
+    [
+      node_packages."@github/copilot"
+    ]
+    ++ (with pkgs; [
+      kooha
+      nixfmt
+      go
+      curl
+      bun
+      fd
+      eza
+      ripgrep
+      bat
+      fzf
+      unzip
+      uv
+      docker
+      wl-clipboard
+      fastfetch
+      hyperfine
+      node2nix
+      just
+      apacheHttpd
+      yazi
+    ])
+    ++ scripts;
 
   programs = {
     zen-browser = {
@@ -111,31 +114,29 @@ in
     GDK_BACKEND = "wayland";
   };
 
-  xdg.mimeApps =
-    let
-      zenDesktop = config.programs.zen-browser.package.meta.desktopFileName;
-      associations = builtins.listToAttrs (
-        map
-          (name: {
-            inherit name;
-            value = zenDesktop;
-          })
-          [
-            "text/html"
-            "application/xhtml+xml"
-            "x-scheme-handler/http"
-            "x-scheme-handler/https"
-            "x-scheme-handler/about"
-            "x-scheme-handler/unknown"
-            "x-scheme-handler/chrome"
-          ]
-      );
-    in
-    {
-      enable = true;
-      associations.added = associations;
-      defaultApplications = associations;
-    };
+  xdg.mimeApps = let
+    zenDesktop = config.programs.zen-browser.package.meta.desktopFileName;
+    associations = builtins.listToAttrs (
+      map
+      (name: {
+        inherit name;
+        value = zenDesktop;
+      })
+      [
+        "text/html"
+        "application/xhtml+xml"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+        "x-scheme-handler/about"
+        "x-scheme-handler/unknown"
+        "x-scheme-handler/chrome"
+      ]
+    );
+  in {
+    enable = true;
+    associations.added = associations;
+    defaultApplications = associations;
+  };
 
   xdg.configFile."mimeapps.list".force = true;
 }

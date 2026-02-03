@@ -1,59 +1,69 @@
-{lib, ...}: {
-  programs = {
-    zsh = {
+{
+  config,
+  lib,
+  ...
+}: let
+  cfgHome = config.xdg.configHome or "${config.home.homeDirectory}/.config";
+  cacheHome = config.xdg.cacheHome or "${config.home.homeDirectory}/.cache";
+  zshConfigDir = "${cfgHome}/zsh";
+  zshCacheDir = "${cacheHome}/zsh";
+  initSource = "${zshConfigDir}/hm-init.zsh";
+  compiledInit = "${zshCacheDir}/hm-init.zsh.zwc";
+  compdump = "${zshCacheDir}/zcompdump";
+in {
+  xdg.configFile."zsh/hm-init.zsh".source = ./init.zsh;
+
+  home.activation.ensureZshCacheDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p ${zshCacheDir}
+  '';
+
+  home.activation.compileZshInit = lib.hm.dag.entryAfter ["ensureZshCacheDir"] ''
+    if command -v zsh >/dev/null 2>&1; then
+      zsh -fc 'zcompile -R "${compiledInit}" "${initSource}"'
+    fi
+  '';
+
+  home.activation.primeZcompdump = lib.hm.dag.entryAfter ["compileZshInit"] ''
+    if command -v zsh >/dev/null 2>&1; then
+      ZDOTDIR="${zshConfigDir}" HOME="${config.home.homeDirectory}" \
+        zsh -fc 'autoload -Uz compinit && compinit -d "${compdump}" -C'
+    fi
+  '';
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+    initExtraFirst = ''
+      if [[ -r "${compiledInit}" ]]; then
+        source "${compiledInit}"
+      elif [[ -r "${initSource}" ]]; then
+        source "${initSource}"
+      fi
+    '';
+    antidote = {
       enable = true;
-      enableCompletion = false;
-      initContent = lib.mkMerge [
-        (lib.mkOrder 500 ''
-					export PATH="$PATH:$HOME/.opencode/bin"
-          if [ -n "''${ZSH_DEBUGRC+1}" ]; then
-             zmodload zsh/zprof
-          fi
-
-          # Source secrets if present
-          [ -f ~/.secrets ] && source ~/.secrets
-
-          zstyle ':completion:*' use-cache on
-          zstyle ':completion:*' cache-path ~/.zsh/cache
-          mkdir -p ~/.zsh/cache
-          autoload -Uz compinit && compinit -C
-
-        '')
-        (lib.mkOrder 1500 ''
-          # Late initialization
-          zvm_after_init() {
-            bindkey '^R' fzf-history-widget
-          }
-
-          if [ -n "''${ZSH_DEBUGRC+1}" ]; then
-             zprof
-          fi
-        '')
+      plugins = [
+        "zsh-users/zsh-autosuggestions"
+        "jeffreytse/zsh-vi-mode"
+        "zsh-users/zsh-syntax-highlighting"
+        "romkatv/zsh-defer"
       ];
-      antidote = {
-        enable = true;
-        plugins = [
-          "zsh-users/zsh-autosuggestions"
-          "jeffreytse/zsh-vi-mode"
-          "zsh-users/zsh-syntax-highlighting"
-        ];
-      };
-      shellAliases =
-        {
-          pn = "pnpm";
-          cat = "bat";
-          find = "fd";
-          grep = "rg";
-          ls = "exa";
-          t = "tmux";
-          v = "nvim";
-        }
-        // builtins.listToAttrs (
-          map (i: {
-            name = builtins.concatStringsSep "" (builtins.genList (_: ".") (i + 1));
-            value = "cd " + (builtins.concatStringsSep "/" (builtins.genList (_: "..") i));
-          }) (builtins.genList (x: x + 1) 5)
-        );
     };
+    shellAliases =
+      {
+        pn = "pnpm";
+        cat = "bat";
+        find = "fd";
+        grep = "rg";
+        ls = "exa";
+        t = "tmux";
+        v = "nvim";
+      }
+      // builtins.listToAttrs (
+        map (i: {
+          name = builtins.concatStringsSep "" (builtins.genList (_: ".") (i + 1));
+          value = "cd " + (builtins.concatStringsSep "/" (builtins.genList (_: "..") i));
+        }) (builtins.genList (x: x + 1) 5)
+      );
   };
 }

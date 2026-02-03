@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+runs=${1:-5}
+
+if ! command -v nvim >/dev/null 2>&1; then
+  echo "Neovim is not installed" >&2
+  exit 1
+fi
+
+out_dir="$HOME/.dotfiles/docs/perf/nvim"
+timestamp=$(date +%Y%m%d-%H%M%S)
+raw_dir="$out_dir/runs-$timestamp"
+summary_file="$out_dir/summary-$timestamp.md"
+
+mkdir -p "$raw_dir"
+
+echo "Profiling Neovim startup ($runs runs)..."
+
+for run in $(seq 1 "$runs"); do
+  log_file="$raw_dir/startuptime-$run.log"
+  nvim --headless --startuptime "$log_file" +qa >/dev/null 2>&1 || true
+  echo "  run $run -> $log_file"
+done
+
+python3 <<PY
+import pathlib
+from statistics import mean
+
+raw_dir = pathlib.Path("$raw_dir")
+logs = sorted(raw_dir.glob("startuptime-*.log"))
+durations = []
+for log_path in logs:
+    total = None
+    with log_path.open() as fh:
+        for line in fh:
+            if line.lower().startswith("total time:"):
+                total = float(line.split()[2])
+    if total is not None:
+        durations.append((log_path.name, total))
+
+summary = pathlib.Path("$summary_file")
+summary.parent.mkdir(parents=True, exist_ok=True)
+
+with summary.open("w") as fh:
+    fh.write(f"# Neovim startup summary ({len(durations)} runs)\n\n")
+    for name, total in durations:
+        fh.write(f"- {name}: {total:.2f} ms\n")
+    if durations:
+        fh.write(f"\nAverage: {mean(d for _, d in durations):.2f} ms\n")
+    fh.write("\nRaw logs: " + str(raw_dir) + "\n")
+
+print(f"Saved summary -> {summary}")
+PY
