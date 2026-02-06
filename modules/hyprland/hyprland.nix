@@ -9,15 +9,13 @@
   mod = "$mod";
   shiftMod = "$mod SHIFT";
 
-  focusBinds = builtins.attrValues (builtins.mapAttrs (
-      key: dir: "bind = ${mod}, ${key}, movefocus, ${dir}"
-    )
-    directions);
+  focusBinds = builtins.attrValues (
+    builtins.mapAttrs (key: dir: "bind = ${mod}, ${key}, movefocus, ${dir}") directions
+  );
 
-  moveBinds = builtins.attrValues (builtins.mapAttrs (
-      key: dir: "bind = ${shiftMod}, ${key}, movewindow, ${dir}"
-    )
-    directions);
+  moveBinds = builtins.attrValues (
+    builtins.mapAttrs (key: dir: "bind = ${shiftMod}, ${key}, movewindow, ${dir}") directions
+  );
 in {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -31,23 +29,21 @@ in {
           "$mod, return, exec, ghostty"
           "$mod, ESCAPE, exec, ${pkgs.hyprlock}/bin/hyprlock"
 
-          "$mod SHIFT, return, exec, chromium"
+          "$mod SHIFT, return, exec, zen-beta"
           "$mod SHIFT, Q, killactive"
           "$mod, F, fullscreen"
         ]
-        ++ (
-          builtins.concatLists (
-            builtins.genList (
-              i: let
-                ws = i + 1;
-              in [
-                "$mod, code:1${toString i}, workspace, ${toString ws}"
-                "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-              ]
-            )
-            9
+        ++ (builtins.concatLists (
+          builtins.genList (
+            i: let
+              ws = i + 1;
+            in [
+              "$mod, code:1${toString i}, workspace, ${toString ws}"
+              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+            ]
           )
-        )
+          9
+        ))
         ++ focusBinds
         ++ moveBinds;
 

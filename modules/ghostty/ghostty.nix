@@ -1,6 +1,8 @@
 {
   config,
   pkgs,
+  lib,
+  isLinux,
   ...
 }: {
   programs.ghostty = {
@@ -10,9 +12,14 @@
       font-family = "MonaspiceAr Nerd Font";
       theme = "vague";
     };
-    package = pkgs.writeShellScriptBin "ghostty" ''
-      exec ${pkgs.nixGL.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
-    '';
+    # Only use nixGL wrapper on Linux
+    package =
+      if isLinux
+      then
+        pkgs.writeShellScriptBin "ghostty" ''
+          exec ${pkgs.nixGL.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+        ''
+      else pkgs.ghostty;
     themes = {
       vague = {
         palette = [
