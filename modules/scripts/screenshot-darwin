@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# macOS screenshot with interactive selection
+# Uses screencapture with interactive selection (-i flag)
+# Copies to clipboard (-c flag)
+screencapture -i -c
