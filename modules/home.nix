@@ -15,10 +15,10 @@
     scriptFiles;
   opencode-bun = pkgs.callPackage ./opencode-bun/opencode-bun.nix {};
 in {
-  home.username = "viktor";
-  home.homeDirectory = "/home/viktor";
-  xdg.configHome = "/home/viktor/.config";
-  xdg.cacheHome = "/home/viktor/.cache";
+  home.username = "johnvicke";
+  home.homeDirectory = "/home/johnvicke";
+  xdg.configHome = "/home/johnvicke/.config";
+  xdg.cacheHome = "/home/johnvicke/.cache";
   home.stateVersion = "24.11";
 
   imports = [
@@ -28,6 +28,8 @@ in {
     ./zsh/zsh.nix
     ./tmux/tmux.nix
     ./nvim/nvim.nix
+    ./hyprland/hyprland.nix
+    ./waybar/waybar.nix
   ];
 
   home.packages =

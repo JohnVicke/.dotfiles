@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of viktor";
+  description = "Home Manager configuration of johnvicke";
 
   inputs = {
     zen-browser = {
@@ -40,7 +40,7 @@
       nodejs = pkgs.nodejs;
     };
   in {
-    homeConfigurations."viktor" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations."johnvicke" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {inherit node_packages;};
       modules = [
