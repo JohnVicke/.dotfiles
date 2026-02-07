@@ -120,7 +120,7 @@ in {
         plugin = luasnip;
         type = "lua";
         config = ''
-          dofile(vim.fn.stdpath("config") .. "/lua/luasnip.lua")
+          dofile(vim.fn.stdpath("config") .. "/lua/snippets.lua")
         '';
       }
       {

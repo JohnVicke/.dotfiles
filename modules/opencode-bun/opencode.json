@@ -65,10 +65,12 @@
     "nixos": {
       "type": "local",
       "command": [
-        "uvx",
-        "mcp-nixos"
+        "nix",
+        "run",
+        "github:utensils/mcp-nixos",
+        "--"
       ],
-      "enabled": false
+      "enabled": true
     }
   }
 }

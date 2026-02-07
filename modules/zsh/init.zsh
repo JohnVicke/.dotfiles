@@ -1,4 +1,4 @@
-export PATH="$PATH:$HOME/.opencode/bin"
+export PATH="$HOME/.nix-profile/bin:$PATH:$HOME/.opencode/bin"
 
 if [[ -n "${ZSH_DEBUGRC-}" ]]; then
   zmodload zsh/zprof

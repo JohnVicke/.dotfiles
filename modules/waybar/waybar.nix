@@ -23,8 +23,8 @@
             "battery"
           ];
           "hyprland/workspaces" = {
-            format="{icon}";
-            format-icons =  {
+            format = "{icon}";
+            format-icons = {
               default = "";
               "1" = "1";
               "2" = "2";
@@ -38,10 +38,10 @@
               "active" = "󱓻";
             };
             persistent-workspaces = {
-              "1"= "[]";
-              "2"= "[]";
-              "3"= "[]";
-              "4"= "[]";
+              "1" = "[]";
+              "2" = "[]";
+              "3" = "[]";
+              "4" = "[]";
             };
           };
         };
